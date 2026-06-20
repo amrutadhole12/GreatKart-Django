@@ -184,7 +184,8 @@ def login(request):
                         existing_variations= item.variations.all()
                         ex_var_list.append(list(existing_variations))
                         id.append(item.id)
-
+                    
+                    # for getting common items
                     # product_variation = [1, 2, 3, 4, 6]
                     # ex_var_list = [4, 6, 3, 5]
 

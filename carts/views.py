@@ -264,13 +264,12 @@ def cart(request, total=0, quantity=0, cart_items=None):
 
     return render(request, 'store/cart.html', context)
 
-
+# login required before doing checkout
 @login_required(login_url='login')
 def checkout(request, total=0, quantity=0, cart_items=None):
     try:
         tax = 0
         grand_total = 0
-
         cart_items = CartItem.objects.filter(
             user=request.user,
             is_active=True

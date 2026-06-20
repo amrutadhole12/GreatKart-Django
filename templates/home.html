@@ -329,7 +329,9 @@
       class="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl transition duration-300"
     >
       <!-- IMAGE SECTION -->
-      <div class="relative overflow-hidden bg-gray-50">
+      <div
+        class="relative overflow-hidden bg-gray-50"
+      >
         <a href="{{ product.get_url }}">
           <img
             src="{{ product.images.url }}"
@@ -347,8 +349,8 @@
 
         <!-- QUICK VIEW OVERLAY -->
         <div
-          class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"
-        ></div>
+  class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition pointer-events-none"
+></div>
       </div>
 
       <!-- CONTENT -->
