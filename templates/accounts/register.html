@@ -1,69 +1,191 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
 
-<section class="section-conten padding-y" style="min-height: 84vh">
-  <!-- ============================ COMPONENT LOGIN   ================================= -->
+{% block content %}
 
-  {% if request.GET.command == 'verification' %}
+<section class="min-h-screen bg-white flex justify-center py-10 px-4">
 
-  <div
-    class="container mx-auto alert alert-info text-center"
-    role="alert"
-    style="max-width: 1024px; margin-top: 100px"
-  >
-    Thank you for registering with us. We have sent you a verification email to
-    your email address [{{ request.GET.email }}]
-    <br /><br />
-    Already verified? <a href="{% url 'login' %}">Login</a>
-  </div>
+  <div class="w-full max-w-md">
 
-  {% else %}
 
-  <div class="card mx-auto" style="max-width: 380px; margin-top: 100px">
-    <div class="card-body">
-      <h4 class="card-title mb-4">Sign in</h4>
+    <div class="bg-white border border-gray-300 rounded-md p-7 shadow-sm">
+
+      <h2 class="text-3xl font-normal text-gray-900 mb-5">
+        Create account
+      </h2>
+
+
       {% include 'includes/alerts.html' %}
-      <form action="{% url 'login' %}" method="POST">
+
+
+      <form action="{% url 'register' %}" method="POST" class="space-y-4">
+
         {% csrf_token %}
-        <div class="form-group">
+
+
+        <div>
+          <label class="block text-sm font-bold text-gray-900 mb-1">
+            First Name
+          </label>
+
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First name"
+            class="w-full px-3 py-2 border border-gray-400 rounded-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+
+        <div>
+        <label class="block text-sm font-bold text-gray-900 mb-1">
+            Last Name
+          </label>
+
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last name"
+            class="w-full px-3 py-2 border border-gray-400 rounded-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+
+
+        <div>
+          <label class="block text-sm font-bold text-gray-900 mb-1">
+            Email
+          </label>
+
           <input
             type="email"
-            class="form-control"
-            placeholder="Email Address"
             name="email"
+            placeholder="Enter email"
+            class="w-full px-3 py-2 border border-gray-400 rounded-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
         </div>
-        <!-- form-group// -->
-        <div class="form-group">
+
+
+        <div>
+          <label class="block text-sm font-bold text-gray-900 mb-1">
+            Mobile number
+          </label>
+
+          <input
+            type="text"
+            name="phone_number"
+            placeholder="+91 9876543210"
+            class="w-full px-3 py-2 border border-gray-400 rounded-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+
+
+        <div>
+          <label class="block text-sm font-bold text-gray-900 mb-1">
+            Password
+          </label>
+
           <input
             type="password"
-            class="form-control"
-            placeholder="Password"
             name="password"
+            placeholder="At least 6 characters"
+            class="w-full px-3 py-2 border border-gray-400 rounded-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+
+          <p class="text-xs text-gray-600 mt-1">
+            Passwords must be at least 6 characters.
+          </p>
+        </div>
+
+
+        <div>
+          <label class="block text-sm font-bold text-gray-900 mb-1">
+            Re-enter password
+          </label>
+
+          <input
+            type="password"
+            name="confirm_password"
+            placeholder="Confirm password"
+            class="w-full px-3 py-2 border border-gray-400 rounded-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
         </div>
-        <!-- form-group// -->
 
-        <div class="form-group">
-          <a href="{% url 'forgotPassword' %}" class="float-right"
-            >Forgot password?</a
-          >
+
+        <div class="flex items-start gap-2 pt-2">
+
+          <input
+            type="checkbox"
+            required
+            class="mt-1"
+          />
+
+          <p class="text-sm text-gray-600">
+            I agree to GreatKart's 
+            <a href="#" class="text-blue-600 hover:underline">
+              Conditions of Use
+            </a>
+            and
+            <a href="#" class="text-blue-600 hover:underline">
+              Privacy Notice
+            </a>.
+          </p>
+
         </div>
-        <!-- form-group form-check .// -->
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">Login</button>
-        </div>
-        <!-- form-group// -->
+
+
+        <button
+          type="submit"
+          class="w-full bg-yellow-400 hover:bg-yellow-500 border border-yellow-500 text-gray-900 py-2 rounded-md font-medium shadow-sm transition"
+        >
+          Create your GreatKart account
+        </button>
+
+
       </form>
-    </div>
-    <!-- card-body.// -->
-  </div>
-  <!-- card .// -->
 
-  <p class="text-center mt-4">
-    Don't have account? <a href="{% url 'register' %}">Sign up</a>
-  </p>
-  <br /><br />
-  <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
-  {% endif %}
+
+      <div class="border-t border-gray-200 my-6"></div>
+
+
+      <p class="text-sm text-gray-700">
+        Already have an account?
+      </p>
+
+
+      <a
+        href="{% url 'login' %}"
+        class="block text-center mt-3 w-full border border-gray-400 rounded-md py-2 hover:bg-gray-50 text-blue-600"
+      >
+        Sign in
+      </a>
+
+
+    </div>
+
+
+    <div class="text-center mt-8 text-xs text-gray-500">
+
+      <div class="space-x-4 mb-3">
+        <a href="#" class="text-blue-600 hover:underline">
+          Conditions of Use
+        </a>
+
+        <a href="#" class="text-blue-600 hover:underline">
+          Privacy Notice
+        </a>
+
+        <a href="#" class="text-blue-600 hover:underline">
+          Help
+        </a>
+      </div>
+
+      © 2026 GreatKart. All rights reserved.
+
+    </div>
+
+
+  </div>
+
 </section>
+
+
 {% endblock %}

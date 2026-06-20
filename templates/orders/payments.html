@@ -1,150 +1,388 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
-<section class="section-content padding-y bg">
-  <div class="container">
-    <!-- ============================ COMPONENT 1 ================================= -->
-    <h4 class="text-center mb-20">Review Your Order and Make Payment</h4>
-    <div class="row">
-      <aside class="col-lg-8">
-        <div class="card">
-          <h5 class="card-header">Billing Address</h5>
-          <div class="card-body">
-            <p class="card-text mb-0">{{order.full_name}}</p>
-            <p class="card-text mb-0">{{order.full_address}}</p>
-            <p class="card-text mb-0">{{order.city}}, {{order.state}}</p>
-            <p class="card-text mb-0">{{order.country}}</p>
-            <p class="card-text mb-0">{{order.email}}</p>
-            <p class="card-text mb-0">{{order.phone}}</p>
-            {% if order.order_note %}
-            <b>Order Note: </b> {{order.order_note}} {% endif %}
-          </div>
-        </div>
-        <div class="card">
-          <h5 class="card-header">Payment Method</h5>
-          <div class="card-body">
-            <p class="card-text">PayPal</p>
-          </div>
-        </div>
-        <div class="card">
-          <h5 class="card-header">Review Products</h5>
-          <div class="card-body">
-            <table class="table table-borderless table-shopping-cart">
-              <thead class="text-muted">
-                <tr class="small text-uppercase">
-                  <th scope="col">Product</th>
-                  <th scope="col" width="120">Quantity</th>
-                  <th scope="col" width="120">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for cart_item in cart_items %}
-                <tr>
-                  <td>
-                    <figure class="itemside align-items-center">
-                      <div class="aside">
-                        <img
-                          src="{{ cart_item.product.images.url }}"
-                          class="img-sm"
-                        />
-                      </div>
-                      <figcaption class="info">
-                        <a
-                          href="{{ cart_item.product.get_url }}"
-                          class="title text-dark"
-                          >{{ cart_item.product.product_name }}</a
-                        >
-                        <p class="text-muted small">
-                          {% if cart_item.variations.all %} {% for item in
-                          cart_item.variations.all %} {{ item.variation_category
-                          | capfirst }} : {{ item.variation_value | capfirst }}
-                          <br />
-                          {% endfor %} {% endif %}
-                        </p>
-                      </figcaption>
-                    </figure>
-                  </td>
-                  <td>
-                    <!-- col.// -->
-                    <label for="">{{cart_item.quantity}}</label>
-                  </td>
-                  <td>
-                    <div class="price-wrap">
-                      <var class="price">$ {{ cart_item.sub_total }}</var>
-                      <small class="text-muted">
-                        $ {{ cart_item.product.price }} each
-                      </small>
-                    </div>
-                    <!-- price-wrap .// -->
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </aside>
-      <!-- col.// -->
-      <aside class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <dl class="dlist-align">
-              <dt>Total price:</dt>
-              <dd class="text-right">$ {{total}}</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Tax:</dt>
-              <dd class="text-right">$ {{tax}}</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Grand Total:</dt>
-              <dd class="text-right text-dark b">
-                <strong>$ {{grand_total}}</strong>
-              </dd>
-            </dl>
-            <hr />
-            <p class="text-center mb-3">
-              <img
-                src="{% static './images/misc/payments.png' %}"
-                height="26"
-              />
-            </p>
+<section class="bg-gray-50 min-h-screen py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- PAGE HEADER -->
 
-            <div id="paypal-button-container">
-              <!-- PayPal Button Will Load -->
+    <div class="text-center mb-14">
+      <div
+        class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-indigo-100 mb-6"
+      >
+        <i class="fa fa-lock text-4xl text-indigo-600"></i>
+      </div>
+
+      <h1 class="text-5xl font-bold mb-4">Secure Payment</h1>
+
+      <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+        Review your order details and complete your payment securely using
+        PayPal.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-10">
+      <!-- LEFT SECTION -->
+
+      <div class="lg:col-span-2 space-y-8">
+        <!-- BILLING ADDRESS -->
+
+        <div class="bg-white rounded-[35px] shadow-xl overflow-hidden">
+          <div class="p-8 border-b">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-3xl font-bold">Billing Address</h2>
+
+                <p class="text-gray-500 mt-2">Shipping and billing details.</p>
+              </div>
+
+              <div
+                class="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center"
+              >
+                <i class="fa fa-map-marker text-2xl text-indigo-600"></i>
+              </div>
             </div>
           </div>
-          <!-- card-body.// -->
-        </div>
-        <!-- card.// -->
-        <div class="alert alert-danger" role="alert">
-          <b>Please Note: </b>This is a demo website. Do not try to make real
-          payments.
-        </div>
-      </aside>
-      <!-- col.// -->
-    </div>
-    <!-- row.// -->
 
-    <!-- ============================ COMPONENT 1 END .// ================================= -->
+          <div class="p-8">
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <label class="text-gray-500 text-sm"> Full Name </label>
+
+                <p class="font-semibold text-lg mt-1">{{order.full_name}}</p>
+              </div>
+
+              <div>
+                <label class="text-gray-500 text-sm"> Email Address </label>
+
+                <p class="font-semibold text-lg mt-1">{{order.email}}</p>
+              </div>
+
+              <div>
+                <label class="text-gray-500 text-sm"> Phone Number </label>
+
+                <p class="font-semibold text-lg mt-1">{{order.phone}}</p>
+              </div>
+
+              <div>
+                <label class="text-gray-500 text-sm"> Country </label>
+
+                <p class="font-semibold text-lg mt-1">{{order.country}}</p>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <label class="text-gray-500 text-sm"> Full Address </label>
+
+              <p class="font-semibold text-lg mt-1">
+                {{order.full_address}}, {{order.city}}, {{order.state}}
+              </p>
+            </div>
+
+            {% if order.order_note %}
+
+            <div
+              class="mt-8 bg-yellow-50 border border-yellow-200 rounded-2xl p-5"
+            >
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center"
+                >
+                  <i class="fa fa-sticky-note text-yellow-600"></i>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold mb-2">Order Note</h4>
+
+                  <p class="text-gray-600">{{order.order_note}}</p>
+                </div>
+              </div>
+            </div>
+
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- PAYMENT METHOD -->
+
+        <div class="bg-white rounded-[35px] shadow-xl overflow-hidden">
+          <div class="p-8 border-b">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-3xl font-bold">Payment Method</h2>
+
+                <p class="text-gray-500 mt-2">
+                  Safe and encrypted payment gateway.
+                </p>
+              </div>
+
+              <div
+                class="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center"
+              >
+                <i class="fab fa-paypal text-3xl text-blue-600"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-8">
+            <div
+              class="border-2 border-indigo-500 rounded-3xl p-6 flex items-center justify-between"
+            >
+              <div class="flex items-center gap-5">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center"
+                >
+                  <i class="fab fa-paypal text-4xl text-blue-600"></i>
+                </div>
+
+                <div>
+                  <h4 class="text-xl font-bold">PayPal</h4>
+
+                  <p class="text-gray-500 mt-1">
+                    Pay securely using your PayPal account.
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <span
+                  class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold"
+                >
+                  Active
+                </span>
+              </div>
+            </div>
+
+            <!-- TRUST BADGES -->
+
+            <div class="grid md:grid-cols-3 gap-5 mt-8">
+              <div class="bg-gray-50 rounded-2xl p-5 text-center">
+                <i class="fa fa-lock text-3xl text-green-600 mb-4"></i>
+
+                <h4 class="font-semibold">SSL Secure</h4>
+
+                <p class="text-sm text-gray-500 mt-2">
+                  End-to-end encrypted payments.
+                </p>
+              </div>
+
+              <div class="bg-gray-50 rounded-2xl p-5 text-center">
+                <i class="fa fa-shield text-3xl text-indigo-600 mb-4"></i>
+
+                <h4 class="font-semibold">Buyer Protection</h4>
+
+                <p class="text-sm text-gray-500 mt-2">
+                  Protected transactions guaranteed.
+                </p>
+              </div>
+
+              <div class="bg-gray-50 rounded-2xl p-5 text-center">
+                <i class="fa fa-refresh text-3xl text-orange-500 mb-4"></i>
+
+                <h4 class="font-semibold">Easy Refunds</h4>
+
+                <p class="text-sm text-gray-500 mt-2">
+                  Fast and secure refund support.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTS -->
+
+        <div class="bg-white rounded-[35px] shadow-xl overflow-hidden">
+          <div class="p-8 border-b">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-3xl font-bold">Review Products</h2>
+
+                <p class="text-gray-500 mt-2">
+                  Verify your products before payment.
+                </p>
+              </div>
+
+              <div
+                class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center"
+              >
+                <i class="fa fa-shopping-bag text-2xl text-green-600"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-8">
+            <div class="space-y-6">
+              {% for cart_item in cart_items %}
+
+              <div class="flex gap-5 border-b pb-6">
+                <!-- IMAGE -->
+
+                <div
+                  class="w-24 h-24 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0"
+                >
+                  <img
+                    src="{{ cart_item.product.images.url }}"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+
+                <!-- INFO -->
+
+                <div class="flex-1">
+                  <a
+                    href="{{ cart_item.product.get_url }}"
+                    class="text-xl font-semibold hover:text-indigo-600 transition"
+                  >
+                    {{ cart_item.product.product_name }}
+                  </a>
+
+                  <div class="text-gray-500 mt-3">
+                    {% for item in cart_item.variations.all %} {% empty %}
+                    <!-- No variations -->
+                    {% endfor %}
+                  </div>
+
+                  <div class="mt-3 flex items-center gap-8">
+                    <span class="text-gray-500">
+                      Quantity :
+                      <span class="font-semibold text-black">
+                        {{cart_item.quantity}}
+                      </span>
+                    </span>
+
+                    <span class="text-gray-500">
+                      Unit Price :
+                      <span class="font-semibold text-black">
+                        ₹{{ cart_item.product.price }}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- TOTAL -->
+
+                <div
+                  class="text-2xl font-bold text-indigo-600 whitespace-nowrap"
+                >
+                  ₹{{ cart_item.sub_total }}
+                </div>
+              </div>
+
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SECTION -->
+
+      <div>
+        <div class="bg-white rounded-[35px] shadow-xl p-8 sticky top-28">
+          <!-- SUMMARY -->
+
+          <div class="flex items-center justify-between mb-8">
+            <div>
+              <h2 class="text-3xl font-bold">Order Summary</h2>
+
+              <p class="text-gray-500 mt-2">Final payment overview.</p>
+            </div>
+
+            <div
+              class="w-14 h-14 rounded-2xl bg-indigo-100 flex items-center justify-center"
+            >
+              <i class="fa fa-receipt text-indigo-600 text-xl"></i>
+            </div>
+          </div>
+
+          <!-- TOTALS -->
+
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500 text-lg"> Subtotal </span>
+
+              <span class="font-semibold text-lg"> ₹{{total}} </span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500 text-lg"> Tax </span>
+
+              <span class="font-semibold text-lg"> ₹{{tax}} </span>
+            </div>
+
+            <div class="border-t pt-6 flex items-center justify-between">
+              <span class="text-2xl font-bold"> Grand Total </span>
+
+              <span class="text-4xl font-bold text-indigo-600">
+                ₹{{grand_total}}
+              </span>
+            </div>
+          </div>
+
+          <!-- PAYMENT ICONS -->
+
+          <div class="flex items-center gap-4 flex-wrap mt-8">
+            <div class="bg-gray-100 rounded-xl px-4 py-3">
+              <i class="fab fa-cc-visa text-3xl"></i>
+            </div>
+
+            <div class="bg-gray-100 rounded-xl px-4 py-3">
+              <i class="fab fa-cc-mastercard text-3xl"></i>
+            </div>
+
+            <div class="bg-gray-100 rounded-xl px-4 py-3">
+              <i class="fab fa-paypal text-3xl"></i>
+            </div>
+          </div>
+
+          <!-- PAYPAL BUTTON -->
+
+          <div class="mt-10">
+            <div id="paypal-button-container">
+              <!-- PAYPAL BUTTON -->
+            </div>
+          </div>
+
+          <!-- DEMO ALERT -->
+
+          <div class="mt-8 bg-red-50 border border-red-200 rounded-2xl p-5">
+            <div class="flex items-start gap-4">
+              <div
+                class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center"
+              >
+                <i class="fa fa-exclamation-circle text-red-600"></i>
+              </div>
+
+              <div>
+                <h4 class="font-semibold text-red-700">Demo Website</h4>
+
+                <p class="text-sm text-red-500 mt-2">
+                  Please do not make real payments on this demo platform.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- container .//  -->
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
 
 <script>
   function getCookie(name) {
     let cookieValue = null;
+
     if (document.cookie && document.cookie !== "") {
       const cookies = document.cookie.split(";");
+
       for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
+
         if (cookie.substring(0, name.length + 1) === name + "=") {
           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
           break;
         }
       }
     }
+
     return cookieValue;
   }
 
@@ -154,17 +392,16 @@
   var orderID = "{{order.order_number}}";
   var payment_method = "PayPal";
   var redirect_url = "{% url 'order_complete' %}";
-  // Render the PayPal button into #paypal-button-container
+
   paypal
     .Buttons({
       style: {
         color: "blue",
-        shape: "rect",
+        shape: "pill",
         label: "pay",
-        height: 40,
+        height: 50,
       },
 
-      // Set up the transaction
       createOrder: function (data, actions) {
         return actions.order.create({
           purchase_units: [
@@ -177,19 +414,19 @@
         });
       },
 
-      // Finalize the transaction
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (details) {
-          // Show a success message to the buyer
-          console.log(details);
           sendData();
+
           function sendData() {
             fetch(url, {
               method: "POST",
+
               headers: {
                 "Content-type": "application/json",
                 "X-CSRFToken": csrftoken,
               },
+
               body: JSON.stringify({
                 orderID: orderID,
                 transID: details.id,
@@ -198,6 +435,7 @@
               }),
             })
               .then((response) => response.json())
+
               .then((data) => {
                 window.location.href =
                   redirect_url +
@@ -210,6 +448,7 @@
         });
       },
     })
+
     .render("#paypal-button-container");
 </script>
 

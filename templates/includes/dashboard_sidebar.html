@@ -1,0 +1,194 @@
+<aside class="col-lg-3 mb-4">
+  <div
+    class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sticky top-24"
+  >
+    <!-- PROFILE -->
+    <div class="text-center pb-5 border-b border-gray-100">
+      <div
+        class="w-20 h-20 mx-auto rounded-full overflow-hidden border-2 border-gray-200 shadow-sm"
+      >
+        {% if user.userprofile.profile_picture %}
+        <img
+          src="{{ user.userprofile.profile_picture.url }}"
+          class="w-full h-full object-cover"
+        />
+        {% else %}
+        <img
+          src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&background=111827&color=fff"
+          class="w-full h-full object-cover"
+        />
+        {% endif %}
+      </div>
+
+      <h5 class="mt-3 font-bold text-gray-900 text-sm">{{ user.full_name }}</h5>
+
+      <p class="text-xs text-gray-500 break-all mt-1">{{ user.email }}</p>
+    </div>
+
+    <!-- MENU -->
+    <div class="mt-5 space-y-2">
+      <!-- DASHBOARD -->
+      <a
+        href="{% url 'dashboard' %}"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {% if '/accounts/' == request.path %}bg-yellow-100 text-yellow-800 font-semibold{% else %}text-gray-700 hover:bg-gray-100{% endif %}"
+      >
+        <i class="fa fa-th-large w-5"></i>
+        Dashboard
+      </a>
+
+      <!-- ORDERS -->
+      <a
+        href="{% url 'my_orders' %}"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {% if '/my_orders/' in request.path %}bg-yellow-100 text-yellow-800 font-semibold{% else %}text-gray-700 hover:bg-gray-100{% endif %}"
+      >
+        <i class="fa fa-shopping-bag w-5"></i>
+        Your Orders
+      </a>
+
+      <!-- PROFILE -->
+      <a
+        href="{% url 'edit_profile' %}"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {% if '/edit_profile/' in request.path %}bg-yellow-100 text-yellow-800 font-semibold{% else %}text-gray-700 hover:bg-gray-100{% endif %}"
+      >
+        <i class="fa fa-user w-5"></i>
+        Login & Profile
+      </a>
+
+      <!-- PASSWORD -->
+      <a
+        href="{% url 'change_password' %}"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {% if '/change_password/' in request.path %}bg-yellow-100 text-yellow-800 font-semibold{% else %}text-gray-700 hover:bg-gray-100{% endif %}"
+      >
+        <i class="fa fa-lock w-5"></i>
+        Security Settings
+      </a>
+    </div>
+
+    <!-- LOGOUT -->
+    <div class="mt-6 pt-5 border-t border-gray-100">
+      <a
+        href="{% url 'logout' %}"
+        class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition"
+      >
+        <i class="fa fa-power-off"></i>
+        Sign Out
+      </a>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .account-sidebar {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 30px 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 120px;
+    overflow: hidden;
+  }
+
+  .sidebar-profile {
+    padding-bottom: 28px;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 28px;
+  }
+
+  .sidebar-avatar {
+    width: 95px;
+    height: 95px;
+    margin: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #f4f4f4;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sidebar-name {
+    margin-top: 18px;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .sidebar-email {
+    color: #6b7280;
+    font-size: 14px;
+    margin-top: 4px;
+    word-break: break-word;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 15px 18px;
+    border-radius: 16px;
+    text-decoration: none !important;
+    color: #374151;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+  }
+
+  .sidebar-link i {
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .sidebar-link:hover {
+    background: #111827;
+    color: #ffffff !important;
+    transform: translateX(4px);
+  }
+
+  .sidebar-link.active {
+    background: linear-gradient(135deg, #111827, #374151);
+    color: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(17, 24, 39, 0.25);
+  }
+
+  .sidebar-logout {
+    margin-top: 30px;
+  }
+
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 18px;
+    background: #ef4444;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: 700;
+    transition: 0.3s;
+  }
+
+  .logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(239, 68, 68, 0.25);
+  }
+
+  @media (max-width: 991px) {
+    .account-sidebar {
+      position: relative;
+      top: 0;
+    }
+  }
+</style>

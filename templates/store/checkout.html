@@ -1,140 +1,393 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-{% block content %}
+<section class="bg-gray-50 py-16 min-h-screen">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- PAGE HEADER -->
 
+    <div class="mb-14">
+      <h1 class="text-5xl font-bold">Secure Checkout</h1>
 
-<section class="section-content padding-y bg">
-<div class="container">
+      <p class="text-gray-500 text-lg mt-4">
+        Complete your purchase securely and quickly.
+      </p>
+    </div>
 
-<!-- ============================ COMPONENT 1 ================================= -->
+    <!-- ALERTS -->
 
-<div class="row">
-	<aside class="col-lg-6">
-<div class="card">
-  <div class="card-body">
-    <h4 class="card-title mb-4">Billing Address</h4>
+    {% include 'includes/alerts.html' %}
+
+    <!-- FORM -->
+
     <form action="{% url 'place_order' %}" method="POST">
       {% csrf_token %}
-      <div class="form-row">
-        <div class="col form-group">
-          <label for="">First Name</label>
-          <input type="text" name="first_name" class="form-control" required>
-        </div>
-        <div class="col form-group">
-          <label for="">Last Name</label>
-          <input type="text" name="last_name" class="form-control" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col form-group">
-          <label for="">Email</label>
-          <input type="email" name="email" class="form-control" required>
-        </div>
-        <div class="col form-group">
-          <label for="">Phone Number</label>
-          <input type="text" name="phone" class="form-control" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col form-group">
-          <label for="">Address Line 1</label>
-          <input type="text" name="address_line_1" class="form-control" required>
-        </div>
-        <div class="col form-group">
-          <label for="">Address Line 2</label>
-          <input type="text" name="address_line_2" class="form-control">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col form-group">
-          <label for="">City</label>
-          <input type="text" name="city" class="form-control" required>
-        </div>
-        <div class="col form-group">
-          <label for="">State</label>
-          <input type="text" name="state" class="form-control" required>
-        </div>
-        <div class="col form-group">
-          <label for="">Country</label>
-          <input type="text" name="country" class="form-control" required>
-        </div>
-        </div>
-        <div class="form-row">
-          <label for="">Order Note</label>
-          <textarea name="order_note" rows="2" class="form-control"></textarea>
+
+      <div class="grid lg:grid-cols-3 gap-10">
+        <!-- BILLING FORM -->
+
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-[35px] shadow-xl p-8 md:p-10">
+            <!-- HEADER -->
+
+            <div class="flex items-center justify-between mb-10">
+              <div>
+                <h2 class="text-3xl font-bold">Billing Details</h2>
+
+                <p class="text-gray-500 mt-2">
+                  Enter your billing and shipping information.
+                </p>
+              </div>
+
+              <div
+                class="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center"
+              >
+                <i class="fa fa-credit-card text-2xl text-indigo-600"></i>
+              </div>
+            </div>
+
+            <!-- NAME -->
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block font-semibold mb-3"> First Name </label>
+
+                <input
+                  type="text"
+                  name="first_name"
+                  required
+                  placeholder="Enter first name"
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-3"> Last Name </label>
+
+                <input
+                  type="text"
+                  name="last_name"
+                  required
+                  placeholder="Enter last name"
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+            </div>
+
+            <!-- EMAIL + PHONE -->
+
+            <div class="grid md:grid-cols-2 gap-6 mt-8">
+              <div>
+                <label class="block font-semibold mb-3"> Email Address </label>
+
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="Enter email"
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-3"> Phone Number </label>
+
+                <input
+                  type="text"
+                  name="phone"
+                  required
+                  placeholder="Enter phone number"
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+            </div>
+
+            <!-- ADDRESS -->
+
+            <div class="grid md:grid-cols-2 gap-6 mt-8">
+              <div>
+                <label class="block font-semibold mb-3"> Address Line 1 </label>
+
+                <input
+                  type="text"
+                  name="address_line_1"
+                  required
+                  placeholder="House no, street..."
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-3"> Address Line 2 </label>
+
+                <input
+                  type="text"
+                  name="address_line_2"
+                  placeholder="Apartment, landmark..."
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+            </div>
+
+            <!-- CITY STATE COUNTRY -->
+
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+              <div>
+                <label class="block font-semibold mb-3"> City </label>
+
+                <input
+                  type="text"
+                  name="city"
+                  required
+                  placeholder="City"
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-3"> State </label>
+
+                <input
+                  type="text"
+                  name="state"
+                  required
+                  placeholder="State"
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-3"> Country </label>
+
+                <input
+                  type="text"
+                  name="country"
+                  required
+                  placeholder="Country"
+                  class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                />
+              </div>
+            </div>
+
+            <!-- ORDER NOTE -->
+
+            <div class="mt-8">
+              <label class="block font-semibold mb-3"> Order Notes </label>
+
+              <textarea
+                name="order_note"
+                rows="5"
+                placeholder="Additional information about your order..."
+                class="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              ></textarea>
+            </div>
+
+            <!-- DELIVERY INFO -->
+
+            <div class="grid md:grid-cols-3 gap-5 mt-10">
+              <div class="bg-gray-50 rounded-2xl p-5 text-center">
+                <i class="fa fa-truck text-3xl text-indigo-600 mb-4"></i>
+
+                <h4 class="font-semibold">Fast Delivery</h4>
+
+                <p class="text-sm text-gray-500 mt-2">
+                  Estimated 2-5 business days.
+                </p>
+              </div>
+
+              <div class="bg-gray-50 rounded-2xl p-5 text-center">
+                <i class="fa fa-lock text-3xl text-green-600 mb-4"></i>
+
+                <h4 class="font-semibold">Secure Payment</h4>
+
+                <p class="text-sm text-gray-500 mt-2">
+                  100% protected checkout process.
+                </p>
+              </div>
+
+              <div class="bg-gray-50 rounded-2xl p-5 text-center">
+                <i class="fa fa-refresh text-3xl text-orange-500 mb-4"></i>
+
+                <h4 class="font-semibold">Easy Returns</h4>
+
+                <p class="text-sm text-gray-500 mt-2">
+                  7-day hassle-free return policy.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <!-- ORDER SUMMARY -->
 
+        <div>
+          <div class="bg-white rounded-[35px] shadow-xl p-8 sticky top-28">
+            <!-- HEADER -->
+
+            <div class="flex items-center justify-between mb-8">
+              <div>
+                <h2 class="text-3xl font-bold">Order Summary</h2>
+
+                <p class="text-gray-500 mt-2">Review your cart items.</p>
+              </div>
+
+              <div
+                class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center"
+              >
+                <i class="fa fa-shopping-bag text-green-600 text-xl"></i>
+              </div>
+            </div>
+
+            <!-- ITEMS -->
+
+            <div class="space-y-6 max-h-[450px] overflow-y-auto pr-2">
+              {% for cart_item in cart_items %}
+
+              <div class="flex gap-4 border-b pb-5">
+                <!-- IMAGE -->
+
+                <div
+                  class="w-20 h-20 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0"
+                >
+                  <img
+                    src="{{ cart_item.product.images.url }}"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+
+                <!-- INFO -->
+
+                <div class="flex-1">
+                  <a
+                    href="{{ cart_item.product.get_url }}"
+                    class="font-semibold hover:text-indigo-600 transition"
+                  >
+                    {{ cart_item.product.product_name }}
+                  </a>
+
+                  <!-- VARIATIONS -->
+
+                  <div class="text-sm text-gray-500 mt-2">
+                    {% for item in cart_item.variations.all %} {% empty %}
+                    <!-- No variations -->
+                    {% endfor %}
+                  </div>
+
+                  <!-- QUANTITY -->
+
+                  <div class="mt-2 text-sm text-gray-500">
+                    Quantity :
+                    <span class="font-semibold text-black">
+                      {{ cart_item.quantity }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- PRICE -->
+
+                <div class="font-bold text-indigo-600 whitespace-nowrap">
+                  ₹{{ cart_item.sub_total }}
+                </div>
+              </div>
+
+              {% endfor %}
+            </div>
+
+            <!-- TOTALS -->
+
+            <div class="border-t border-b py-6 mt-8 space-y-5">
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 text-lg"> Subtotal </span>
+
+                <span class="font-semibold text-lg"> ₹{{ total }} </span>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 text-lg"> Tax </span>
+
+                <span class="font-semibold text-lg"> ₹{{ tax }} </span>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold"> Grand Total </span>
+
+                <span class="text-3xl font-bold text-indigo-600">
+                  ₹{{ grand_total }}
+                </span>
+              </div>
+            </div>
+
+            <!-- PAYMENT METHODS -->
+
+            <div class="mt-8">
+              <h4 class="font-semibold mb-5">Accepted Payments</h4>
+
+              <div class="flex items-center gap-4 flex-wrap">
+                <div class="bg-gray-100 rounded-xl px-4 py-3">
+                  <i class="fab fa-cc-visa text-3xl"></i>
+                </div>
+
+                <div class="bg-gray-100 rounded-xl px-4 py-3">
+                  <i class="fab fa-cc-mastercard text-3xl"></i>
+                </div>
+
+                <div class="bg-gray-100 rounded-xl px-4 py-3">
+                  <i class="fab fa-cc-paypal text-3xl"></i>
+                </div>
+
+                <div class="bg-gray-100 rounded-xl px-4 py-3">
+                  <i class="fab fa-google-pay text-3xl"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECURITY -->
+
+            <div
+              class="bg-green-50 border border-green-200 rounded-2xl p-5 mt-8"
+            >
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center"
+                >
+                  <i class="fa fa-lock text-green-600"></i>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold">Secure Checkout</h4>
+
+                  <p class="text-sm text-gray-500 mt-1">
+                    SSL encrypted payment protection.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PLACE ORDER BUTTON -->
+
+            <button
+              type="submit"
+              name="submit"
+              class="w-full mt-8 bg-black hover:bg-indigo-600 text-white py-5 rounded-2xl font-semibold transition duration-300 flex items-center justify-center gap-3 text-lg"
+            >
+              <i class="fa fa-check-circle"></i>
+
+              Place Order
+            </button>
+
+            <!-- CONTINUE SHOPPING -->
+
+            <a
+              href="{% url 'store' %}"
+              class="w-full mt-5 border border-gray-300 hover:border-indigo-600 hover:text-indigo-600 py-5 rounded-2xl font-semibold flex items-center justify-center gap-3 transition text-lg"
+            >
+              <i class="fa fa-arrow-left"></i>
+
+              Continue Shopping
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
-</div> <!-- card.// -->
-
-	</aside> <!-- col.// -->
-	<aside class="col-lg-6">
-
-		<div class="card">
-		<div class="card-body">
-      <table class="table table-borderless table-shopping-cart">
-      <thead class="text-muted">
-      <tr class="small text-uppercase">
-        <th scope="col">Product</th>
-        <th scope="col" width="120">Quantity</th>
-        <th scope="col" width="120">Price</th>
-
-      </tr>
-      </thead>
-      <tbody>
-
-      {% for cart_item in cart_items %}
-      <tr>
-      	<td>
-      		<figure class="itemside align-items-center">
-      			<div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
-      			<figcaption class="info">
-      				<a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
-      				<p class="text-muted small">
-      					{% if cart_item.variations.all %}
-      						{% for item in cart_item.variations.all %}
-      							{{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
-      						{% endfor %}
-      					{% endif %}
-      				</p>
-      			</figcaption>
-      		</figure>
-      	</td>
-      	<td>
-      		<!-- col.// -->
-      				<label for="">{{cart_item.quantity}}</label>
-      	</td>
-      	<td>
-      		<div class="price-wrap">
-      			<var class="price">$ {{ cart_item.sub_total }}</var>
-      			<small class="text-muted"> $ {{ cart_item.product.price }} each </small>
-      		</div> <!-- price-wrap .// -->
-      	</td>
-
-      </tr>
-      {% endfor %}
-
-      </tbody>
-      </table>
-
-      <button type="submit" name="submit" class="btn btn-primary btn-block">Place Order</button>
-			<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
-      </form>
-		</div> <!-- card-body.// -->
-		</div> <!-- card.// -->
-
-
-</aside> <!-- col.// -->
-
-
-</div> <!-- row.// -->
-
-<!-- ============================ COMPONENT 1 END .// ================================= -->
-
-</div> <!-- container .//  -->
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
 
 {% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<section class="min-h-screen bg-gray-100 py-8">
+  <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-12 gap-6">
+    <!-- SIDEBAR -->
+    <aside class="lg:col-span-3">
+      {% include 'includes/dashboard_sidebar.html' %}
+    </aside>
+
+    <!-- MAIN -->
+    <main class="lg:col-span-9 space-y-6">
+      <!-- AMAZON STYLE HEADER BAR -->
+      <div
+        class="bg-white border rounded-xl shadow-sm p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+      >
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Your Orders</h1>
+          <p class="text-sm text-gray-500 mt-1">
+            View, track, and manage all your orders
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm">
+            Total: {{ orders|length }}
+          </span>
+
+          <a
+            href="{% url 'store' %}"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+          >
+            Buy More
+          </a>
+        </div>
+      </div>
+
+      {% if orders %}
+
+      <!-- ORDER LIST (AMAZON CARD STYLE) -->
+      <div class="space-y-5">
+        {% for order in orders %}
+
+        <div
+          class="bg-white border rounded-xl shadow-sm hover:shadow-md transition"
+        >
+          <!-- TOP BAR -->
+          <div
+            class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-5 border-b"
+          >
+            <div>
+              <p class="text-xs text-gray-500">ORDER PLACED</p>
+              <p class="text-sm font-semibold text-gray-900">
+                {{ order.created_at|date:"d M Y" }}
+              </p>
+            </div>
+
+            <div>
+              <p class="text-xs text-gray-500">TOTAL</p>
+              <p class="text-lg font-bold text-gray-900">
+                ₹{{ order.order_total }}
+              </p>
+            </div>
+
+            <div>
+              <p class="text-xs text-gray-500">ORDER ID</p>
+              <p class="text-sm font-semibold text-gray-900">
+                #{{ order.order_number }}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span
+                class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-semibold"
+              >
+                Completed
+              </span>
+
+              <a
+                href="{% url 'order_detail' order.order_number %}"
+                class="bg-gray-900 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+              >
+                View Order
+              </a>
+            </div>
+          </div>
+
+          <!-- CUSTOMER INFO (AMAZON STYLE SECOND ROW) -->
+          <div
+            class="p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+          >
+            <div class="flex items-center gap-4">
+              <div
+                class="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center font-bold"
+              >
+                {{ order.full_name|slice:":1" }}
+              </div>
+
+              <div>
+                <p class="font-semibold text-gray-900">{{ order.full_name }}</p>
+                <p class="text-sm text-gray-500">
+                  {{ order.email }} • {{ order.phone }}
+                </p>
+              </div>
+            </div>
+
+            <div class="text-sm text-gray-500">
+              Delivery tracking available after dispatch
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      {% else %}
+
+      <!-- EMPTY STATE (AMAZON STYLE) -->
+      <div class="bg-white border rounded-xl p-16 text-center">
+        <div
+          class="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center text-gray-400 text-2xl"
+        >
+          <i class="fa fa-shopping-bag"></i>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-900 mt-5">No Orders Yet</h2>
+
+        <p class="text-gray-500 mt-2">
+          Looks like you haven't placed any orders.
+        </p>
+
+        <a
+          href="{% url 'store' %}"
+          class="inline-block mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold"
+        >
+          Start Shopping
+        </a>
+      </div>
+
+      {% endif %}
+    </main>
+  </div>
+</section>
+
+{% endblock %}

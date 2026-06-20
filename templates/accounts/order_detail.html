@@ -1,0 +1,457 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<section class="py-5 bg-light min-vh-100">
+  <div class="container">
+    <!-- TOP HEADER -->
+    <div class="order-top-header mb-4">
+      <div>
+        <h2 class="fw-bold mb-2">Order Details</h2>
+
+        <p class="text-muted mb-0">
+          Track and review your complete order information.
+        </p>
+      </div>
+
+      <div class="order-status-badge">
+        <i class="fa fa-check-circle"></i>
+
+        {{ order.payment.status }}
+      </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="row g-4">
+      <!-- LEFT SIDE -->
+      <div class="col-lg-8">
+        <!-- ORDER INFO -->
+        <div class="premium-card mb-4">
+          <div class="section-header">
+            <div>
+              <h4 class="fw-bold mb-1">Order Information</h4>
+
+              <p class="text-muted mb-0">Order ID & payment details</p>
+            </div>
+
+            <div class="invoice-icon">
+              <i class="fa fa-file-invoice"></i>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-box">
+              <span>Order Number</span>
+
+              <h6>#{{ order.order_number }}</h6>
+            </div>
+
+            <div class="info-box">
+              <span>Transaction ID</span>
+
+              <h6>{{ order.payment.payment_id }}</h6>
+            </div>
+
+            <div class="info-box">
+              <span>Payment Method</span>
+
+              <h6>{{ order.payment.payment_method }}</h6>
+            </div>
+
+            <div class="info-box">
+              <span>Order Date</span>
+
+              <h6>{{ order.created_at }}</h6>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHIPPING -->
+        <div class="premium-card mb-4">
+          <div class="section-header">
+            <div>
+              <h4 class="fw-bold mb-1">Shipping Address</h4>
+
+              <p class="text-muted mb-0">Delivery destination details</p>
+            </div>
+
+            <div class="invoice-icon green">
+              <i class="fa fa-map-marker-alt"></i>
+            </div>
+          </div>
+
+          <div class="shipping-box">
+            <h5 class="fw-bold mb-3">{{ order.full_name }}</h5>
+
+            <p class="mb-2">{{ order.full_address }}</p>
+
+            <p class="mb-2">{{ order.city }}, {{ order.state }}</p>
+
+            <p class="mb-2">{{ order.country }}</p>
+
+            <p class="mb-2">{{ order.phone }}</p>
+
+            <p class="mb-0">{{ order.email }}</p>
+          </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="premium-card">
+          <div class="section-header">
+            <div>
+              <h4 class="fw-bold mb-1">Ordered Products</h4>
+
+              <p class="text-muted mb-0">Products included in this order</p>
+            </div>
+
+            <div class="invoice-icon blue">
+              <i class="fa fa-shopping-bag"></i>
+            </div>
+          </div>
+
+          <!-- PRODUCTS LOOP -->
+          {% for item in order_detail %}
+
+          <div class="product-card">
+            <!-- IMAGE -->
+            <div class="product-image">
+              <img src="{{ item.product.images.url }}" alt="Product" />
+            </div>
+
+            <!-- INFO -->
+            <div class="product-content">
+              <h5 class="fw-bold mb-2">{{ item.product.product_name }}</h5>
+
+              <!-- VARIATIONS -->
+              <div class="variation-list">
+                {% if item.variations.all %} {% for i in item.variations.all %}
+
+                <span>
+                  {{ i.variation_category|capfirst }} : {{
+                  i.variation_value|capfirst }}
+                </span>
+
+                {% endfor %} {% endif %}
+              </div>
+
+              <!-- QUANTITY -->
+              <div class="product-meta mt-3">
+                <span> Qty : {{ item.quantity }} </span>
+              </div>
+            </div>
+
+            <!-- PRICE -->
+            <div class="product-price">₹{{ item.product_price }}</div>
+          </div>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="col-lg-4">
+        <!-- SUMMARY -->
+        <div class="premium-card sticky-summary">
+          <div class="section-header mb-4">
+            <div>
+              <h4 class="fw-bold mb-1">Payment Summary</h4>
+
+              <p class="text-muted mb-0">Complete billing breakdown</p>
+            </div>
+
+            <div class="invoice-icon purple">
+              <i class="fa fa-wallet"></i>
+            </div>
+          </div>
+
+          <!-- PRICE ROW -->
+          <div class="summary-row">
+            <span>Subtotal</span>
+
+            <strong>₹{{ subtotal }}</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Tax</span>
+
+            <strong>₹{{ order.tax }}</strong>
+          </div>
+
+          <div class="summary-row total">
+            <span>Total Amount</span>
+
+            <strong>₹{{ order.order_total }}</strong>
+          </div>
+
+          <!-- PAYMENT STATUS -->
+          <div class="payment-status">
+            <div class="status-icon">
+              <i class="fa fa-shield-check"></i>
+            </div>
+
+            <div>
+              <h6 class="mb-1">Payment Successful</h6>
+
+              <p class="mb-0 text-muted small">
+                Your order has been confirmed.
+              </p>
+            </div>
+          </div>
+
+          <!-- BUTTONS -->
+          <div class="d-grid gap-3 mt-4">
+            <button onclick="window.print()" class="action-btn dark-btn">
+              <i class="fa fa-print"></i>
+
+              Print Invoice
+            </button>
+
+            <a href="{% url 'store' %}" class="action-btn light-btn">
+              <i class="fa fa-shopping-cart"></i>
+
+              Continue Shopping
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .order-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .order-status-badge {
+    background: #dcfce7;
+    color: #166534;
+    padding: 14px 22px;
+    border-radius: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .premium-card {
+    background: #ffffff;
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .invoice-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #111827;
+  }
+
+  .invoice-icon.green {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  .invoice-icon.blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .invoice-icon.purple {
+    background: #ede9fe;
+    color: #6d28d9;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .info-box {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .info-box span {
+    color: #6b7280;
+    font-size: 14px;
+  }
+
+  .info-box h6 {
+    margin-top: 10px;
+    font-weight: 700;
+    color: #111827;
+    word-break: break-word;
+  }
+
+  .shipping-box {
+    background: #f9fafb;
+    padding: 24px;
+    border-radius: 24px;
+  }
+
+  .product-card {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 0;
+    border-top: 1px solid #f3f4f6;
+  }
+
+  .product-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #f3f4f6;
+    flex-shrink: 0;
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-content {
+    flex: 1;
+  }
+
+  .variation-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .variation-list span {
+    background: #f3f4f6;
+    padding: 8px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .product-meta {
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .product-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .sticky-summary {
+    position: sticky;
+    top: 120px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .summary-row.total {
+    font-size: 22px;
+    border: none;
+    padding-top: 28px;
+  }
+
+  .payment-status {
+    margin-top: 30px;
+    background: #f9fafb;
+    border-radius: 22px;
+    padding: 20px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .status-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: #dcfce7;
+    color: #166534;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .action-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 18px;
+    text-decoration: none !important;
+    font-weight: 700;
+    transition: 0.3s;
+    border: none;
+  }
+
+  .dark-btn {
+    background: #111827;
+    color: white;
+  }
+
+  .dark-btn:hover {
+    background: #4f46e5;
+    transform: translateY(-2px);
+  }
+
+  .light-btn {
+    background: #f3f4f6;
+    color: #111827;
+  }
+
+  .light-btn:hover {
+    background: #e5e7eb;
+  }
+
+  @media (max-width: 768px) {
+    .premium-card {
+      padding: 22px;
+    }
+
+    .product-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .product-price {
+      font-size: 20px;
+    }
+
+    .sticky-summary {
+      position: relative;
+      top: 0;
+    }
+  }
+</style>
+
+{% endblock %}

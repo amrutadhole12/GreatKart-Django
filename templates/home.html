@@ -1,67 +1,483 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
 
+<!-- ================= HERO SECTION ================= -->
 
-{% extends 'base.html' %}
-{% load static %}
+<section class="max-w-7xl mx-auto px-6 mt-6">
+  <!-- <img
+    src="{% static 'images/banners/cover.jpg' %}"
+    class="h-28 md:h-40 object-contain"
+  /> -->
+  <div class="grid md:grid-cols-3 gap-4">
+    <!-- MAIN BANNER -->
 
-{% block content %}
+    <div
+      class="md:col-span-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white flex items-center justify-between"
+    >
+      <div>
+        <h1 class="text-2xl md:text-4xl font-bold">Big Fashion Deals</h1>
+        <p class="text-white/80 mt-2 text-sm">
+          Up to 70% OFF on premium collection
+        </p>
 
+        <a
+          href="{% url 'store' %}"
+          class="inline-block mt-4 bg-white text-indigo-700 px-5 py-2 rounded-lg text-sm font-semibold"
+        >
+          Shop Now
+        </a>
+      </div>
 
+      <!-- <img
+        src="{% static 'images/banners/cover.jpg' %}"
+        class="h-28 md:h-40 object-contain"
+      /> -->
+    </div>
 
-<!-- ========================= SECTION MAIN ========================= -->
-<section class="section-intro padding-y-sm">
-<div class="container">
+    <!-- SIDE BOX -->
+    <div class="bg-white rounded-2xl p-5 shadow">
+      <h2 class="font-semibold">Today's Deal</h2>
+      <p class="text-sm text-gray-500 mt-1">Flash sale ends soon</p>
 
-<div class="intro-banner-wrap">
-	<img src="{% static 'images/banners/cover.jpg' %}" class="img-fluid rounded">
-</div>
-
-</div> <!-- container //  -->
+      <div class="mt-4 text-indigo-600 font-bold text-xl">70% OFF</div>
+    </div>
+  </div>
 </section>
-<!-- ========================= SECTION MAIN END// ========================= -->
 
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y-sm">
-<div class="container">
+<section class="max-w-7xl mx-auto px-6 mt-6">
+  <div class="flex items-center gap-5 overflow-x-auto scrollbar-hide py-3">
+    <!-- MEN -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        👕
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-indigo-600">
+        Men
+      </span>
+    </a>
 
-<header class="section-heading">
-	<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-	<h3 class="section-title">Popular products</h3>
-</header><!-- sect-heading -->
+    <!-- WOMEN -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-pink-50 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        👗
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-pink-500">
+        Women
+      </span>
+    </a>
 
+    <!-- KIDS (NEW) -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        🧒
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-yellow-500">
+        Kids
+      </span>
+    </a>
 
-<div class="row">
-	{% for product in products %}
-	<div class="col-md-3">
-		<div class="card card-product-grid">
-			<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.images.url }}"> </a>
-			<figcaption class="info-wrap">
-				<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
-				<div class="price mt-1">$ {{ product.price }}</div> <!-- price-wrap.// -->
-				<div class="rating-star">
-					<span>
-						<i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
-						<i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
-						<i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
-						<i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
-						<i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-						</span>
-				</div>
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	{% endfor %}
-</div> <!-- row.// -->
+    <!-- SHOES -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        👟
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-indigo-600">
+        Shoes
+      </span>
+    </a>
 
-</div><!-- container // -->
+    <!-- WATCHES -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        ⌚
+      </div>
+      <span class="text-xs mt-2 text-gray-700"> Watches </span>
+    </a>
+
+    <!-- ELECTRONICS -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        📱
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-blue-500">
+        Electronics
+      </span>
+    </a>
+
+    <!-- BEAUTY -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-pink-50 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        💄
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-pink-500">
+        Beauty
+      </span>
+    </a>
+
+    <!-- HOUSEHOLD (NEW) -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        🏠
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-green-600">
+        Household
+      </span>
+    </a>
+
+    <!-- HOME APPLIANCES -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        🧺
+      </div>
+      <span class="text-xs mt-2 text-gray-700 group-hover:text-indigo-600">
+        Home & Kitchen
+      </span>
+    </a>
+
+    <!-- ACCESSORIES -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-xl shadow-sm group-hover:shadow-md group-hover:scale-105 transition"
+      >
+        🎒
+      </div>
+      <span class="text-xs mt-2 text-gray-700"> Accessories </span>
+    </a>
+
+    <!-- MORE -->
+    <a href="#" class="flex flex-col items-center min-w-[85px] group">
+      <div
+        class="w-14 h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition"
+      >
+        +
+      </div>
+      <span class="text-xs mt-2 text-gray-700"> More </span>
+    </a>
+  </div>
 </section>
-<!-- ========================= SECTION  END// ========================= -->
 
+<!-- ================= FEATURES ================= -->
 
+<section class="max-w-7xl mx-auto px-6 mt-10">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <!-- ITEM -->
+    <div
+      class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition group"
+    >
+      <div
+        class="w-11 h-11 rounded-full bg-indigo-50 flex items-center justify-center group-hover:scale-105 transition"
+      >
+        <i class="fa fa-truck text-indigo-600"></i>
+      </div>
 
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900">Free Shipping</h3>
+        <p class="text-xs text-gray-500">Orders above ₹999</p>
+      </div>
+    </div>
 
+    <!-- ITEM -->
+    <div
+      class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition group"
+    >
+      <div
+        class="w-11 h-11 rounded-full bg-pink-50 flex items-center justify-center group-hover:scale-105 transition"
+      >
+        <i class="fa fa-credit-card text-pink-500"></i>
+      </div>
 
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900">Secure Payment</h3>
+        <p class="text-xs text-gray-500">100% protected checkout</p>
+      </div>
+    </div>
 
-</body>
-</html>
+    <!-- ITEM -->
+    <div
+      class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition group"
+    >
+      <div
+        class="w-11 h-11 rounded-full bg-green-50 flex items-center justify-center group-hover:scale-105 transition"
+      >
+        <i class="fa fa-refresh text-green-500"></i>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900">Easy Returns</h3>
+        <p class="text-xs text-gray-500">7-day return policy</p>
+      </div>
+    </div>
+
+    <!-- ITEM -->
+    <div
+      class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition group"
+    >
+      <div
+        class="w-11 h-11 rounded-full bg-yellow-50 flex items-center justify-center group-hover:scale-105 transition"
+      >
+        <i class="fa fa-headphones text-yellow-500"></i>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900">24/7 Support</h3>
+        <p class="text-xs text-gray-500">Always here to help</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FLASH SALE ================= -->
+
+<section class="max-w-7xl mx-auto px-6 mt-16">
+  <div
+    class="rounded-2xl bg-gradient-to-r from-red-500 to-pink-600 overflow-hidden"
+  >
+    <div
+      class="flex flex-col md:flex-row items-center justify-between gap-8 p-6 md:p-8"
+    >
+      <!-- LEFT -->
+      <div class="text-white">
+        <span
+          class="text-[11px] tracking-[3px] uppercase bg-white/20 px-3 py-1 rounded-full"
+        >
+          Flash Deal
+        </span>
+
+        <h2 class="text-2xl md:text-3xl font-bold mt-3">Up to 70% OFF</h2>
+
+        <p class="text-white/80 text-sm mt-1">
+          Limited time offer — grab before it ends.
+        </p>
+
+        <a
+          href="{% url 'store' %}"
+          class="inline-block mt-4 bg-white text-black px-5 py-2 rounded-lg text-sm font-semibold hover:scale-105 transition"
+        >
+          Shop Now
+        </a>
+      </div>
+
+      <!-- RIGHT (COUNTDOWN COMPACT) -->
+      <div class="flex gap-2 md:gap-3">
+        <div class="bg-white/20 rounded-xl px-3 py-2 text-center min-w-[60px]">
+          <div class="text-lg font-bold text-white" id="days">00</div>
+          <div class="text-[10px] text-white/80">Days</div>
+        </div>
+
+        <div class="bg-white/20 rounded-xl px-3 py-2 text-center min-w-[60px]">
+          <div class="text-lg font-bold text-white" id="hours">00</div>
+          <div class="text-[10px] text-white/80">Hrs</div>
+        </div>
+
+        <div class="bg-white/20 rounded-xl px-3 py-2 text-center min-w-[60px]">
+          <div class="text-lg font-bold text-white" id="minutes">00</div>
+          <div class="text-[10px] text-white/80">Min</div>
+        </div>
+
+        <div class="bg-white/20 rounded-xl px-3 py-2 text-center min-w-[60px]">
+          <div class="text-lg font-bold text-white" id="seconds">00</div>
+          <div class="text-[10px] text-white/80">Sec</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= PRODUCTS ================= -->
+
+<section class="max-w-7xl mx-auto px-6 mt-24">
+  <!-- HEADER -->
+  <div class="flex flex-col md:flex-row items-center justify-between mb-10">
+    <div>
+      <p class="text-sm text-indigo-600 font-semibold tracking-[3px] uppercase">
+        Trending Collection
+      </p>
+
+      <h2 class="text-3xl md:text-5xl font-bold mt-2 text-gray-900">
+        Popular Products
+      </h2>
+    </div>
+
+    <a
+      href="{% url 'store' %}"
+      class="mt-6 md:mt-0 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition"
+    >
+      View All
+    </a>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for product in products %}
+    <div
+      class="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl transition duration-300"
+    >
+      <!-- IMAGE SECTION -->
+      <div class="relative overflow-hidden bg-gray-50">
+        <a href="{{ product.get_url }}">
+          <img
+            src="{{ product.images.url }}"
+            alt="{{ product.product_name }}"
+            class="w-full h-60 object-cover group-hover:scale-105 transition duration-500"
+          />
+        </a>
+
+        <!-- WISHLIST -->
+        <button
+          class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full shadow flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+        >
+          ❤️
+        </button>
+
+        <!-- QUICK VIEW OVERLAY -->
+        <div
+          class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"
+        ></div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="p-4">
+        {% if product.category %}
+        <p class="text-xs text-gray-500 uppercase tracking-wide">
+          {{ product.category }}
+        </p>
+        {% endif %}
+
+        <a
+          href="{{ product.get_url }}"
+          class="block mt-1 text-sm font-semibold text-gray-900 hover:text-indigo-600 line-clamp-2"
+        >
+          {{ product.product_name }}
+        </a>
+
+        <!-- PRICE + BUTTON -->
+        <div class="flex items-center justify-between mt-3">
+          <div>
+            <p class="text-lg font-bold text-gray-900">₹{{ product.price }}</p>
+            <p class="text-xs text-green-600">Free delivery</p>
+          </div>
+
+          <a
+            href="{{ product.get_url }}"
+            class="px-3 py-1.5 bg-indigo-600 text-white text-xs rounded-lg hover:bg-indigo-700 transition"
+          >
+            View
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+
+<section class="max-w-7xl mx-auto px-6 mt-10">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+    <div class="bg-white p-4 rounded-xl shadow-sm">
+      <h2 class="font-bold text-indigo-600">10K+</h2>
+      <p class="text-xs text-gray-500">Customers</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow-sm">
+      <h2 class="font-bold text-pink-500">5K+</h2>
+      <p class="text-xs text-gray-500">Products</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow-sm">
+      <h2 class="font-bold text-green-500">99%</h2>
+      <p class="text-xs text-gray-500">Reviews</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow-sm">
+      <h2 class="font-bold text-yellow-500">24/7</h2>
+      <p class="text-xs text-gray-500">Support</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEWSLETTER ================= -->
+
+<section class="max-w-7xl mx-auto px-6 mt-10 mb-16">
+  <div
+    class="bg-indigo-600 text-white rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4"
+  >
+    <div>
+      <h2 class="font-semibold text-lg">Get offers in your inbox</h2>
+      <p class="text-white/70 text-sm">Subscribe for latest deals</p>
+    </div>
+
+    <form class="flex gap-2">
+      <input
+        type="email"
+        placeholder="Email"
+        class="px-4 py-2 rounded-lg text-black text-sm"
+      />
+
+      <button class="bg-black px-5 py-2 rounded-lg text-sm">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ================= SWIPER ================= -->
+
+<script>
+  var swiper = new Swiper(".heroSwiper", {
+    loop: true,
+
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+<!-- ================= FLASH TIMER ================= -->
+
+<script>
+  const countDownDate = new Date().getTime() + 4 * 24 * 60 * 60 * 1000;
+
+  const timer = setInterval(function () {
+    const now = new Date().getTime();
+
+    const distance = countDownDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    );
+
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+  }, 1000);
+</script>
 
 {% endblock %}

@@ -1,81 +1,183 @@
 {% load static %}
 
+<!-- TOP ANNOUNCEMENT BAR -->
 
-<div class="container-fluid" style="text-align:center;background-image: linear-gradient(to right, #3167EB , #7A7A7A);padding:10px;font-weight: 600;position:sticky;top:0;z-index:999;">
-<a href="https://www.udemy.com/course/django-ecommerce-project-based-course-python-django-web-development/?couponCode=DJECOM" style="color: white;text-transform: uppercase;letter-spacing: 2px;"><span>&#x1F525</span> Purchase Full Course on Udemy | Upto 95% Discount <span>&#x1F525</span></a>
-</div> <!-- container //  -->
+<div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+    <p class="font-medium tracking-wide">
+      🔥 Free Shipping on Orders Above ₹999
+    </p>
 
-<header class="section-header">
+    <div class="hidden md:flex items-center gap-6">
+      <a href="#" class="hover:text-gray-200 transition"> Help Center </a>
 
-
-
-<section class="header-main border-bottom">
-  <div class="container">
-<div class="row align-items-center">
-  <div class="col-lg-2 col-md-3 col-6">
-    <a href="{% url 'home' %}" class="brand-wrap">
-      <img class="logo" src="{% static './images/logo.png' %}">
-    </a> <!-- brand-wrap.// -->
+      <a href="#" class="hover:text-gray-200 transition"> Track Order </a>
+    </div>
   </div>
-  <div class="col-lg col-sm col-md col-6 flex-grow-0">
-    <div class="category-wrap dropdown d-inline-block float-right">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-bars"></i> All category
-      </button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="{% url 'store' %}">All Products </a>
-        {% for category in links %}
-          <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }} </a>
-        {% endfor %}
-      </div>
-    </div>  <!-- category-wrap.// -->
-  </div> <!-- col.// -->
-  <a href="{% url 'store' %}" class="btn btn-outline-primary">Store</a>
-  <div class="col-lg  col-md-6 col-sm-12 col">
-    <form action="{% url 'search' %}" class="search" method='GET'>
-      <div class="input-group w-100">
-          <input type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword" required>
+</div>
 
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
+<!-- MAIN NAVBAR -->
+
+<header
+  class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg shadow-sm border-b border-gray-200"
+>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-20">
+      <!-- LOGO -->
+
+      <a href="{% url 'home' %}" class="flex items-center gap-3">
+        <img
+          src="{% static 'images/logo.png' %}"
+          class="h-12 w-auto object-contain"
+        />
+
+        <!-- <h1 class="text-2xl font-bold gradient-text">GreatKart</h1> -->
+      </a>
+
+      <!-- SEARCH BAR -->
+
+      <div class="hidden lg:flex flex-1 max-w-2xl mx-10">
+        <form action="{% url 'search' %}" method="GET" class="w-full">
+          <div class="relative">
+            <input
+              type="text"
+              name="keyword"
+              placeholder="Search for products..."
+              required
+              class="w-full bg-gray-100 border border-gray-200 rounded-2xl pl-6 pr-16 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+            />
+
+            <button
+              type="submit"
+              class="absolute right-2 top-1/2 -translate-y-1/2 bg-indigo-600 hover:bg-indigo-700 text-white w-11 h-11 rounded-xl transition"
+            >
               <i class="fa fa-search"></i>
             </button>
           </div>
+        </form>
+      </div>
+
+      <!-- RIGHT MENU -->
+
+      <div class="flex items-center gap-5">
+        <!-- STORE -->
+
+        <a
+          href="{% url 'store' %}"
+          class="hidden md:block text-gray-700 hover:text-indigo-600 font-medium transition"
+        >
+          Store
+        </a>
+
+        <!-- CATEGORY DROPDOWN -->
+
+        <div class="relative group hidden lg:block">
+          <button
+            class="flex items-center gap-2 text-gray-700 hover:text-indigo-600 font-medium transition"
+          >
+            <i class="fa fa-bars"></i>
+            Categories
+          </button>
+
+          <div
+            class="absolute top-10 left-0 w-64 bg-white rounded-2xl shadow-2xl p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300"
+          >
+            <a
+              href="{% url 'store' %}"
+              class="block px-4 py-3 rounded-xl hover:bg-gray-100 transition"
+            >
+              All Products
+            </a>
+
+            {% for category in links %}
+
+            <a
+              href="{{ category.get_url }}"
+              class="block px-4 py-3 rounded-xl hover:bg-gray-100 transition"
+            >
+              {{ category.category_name }}
+            </a>
+
+            {% endfor %}
+          </div>
         </div>
-    </form> <!-- search-wrap .end// -->
-  </div> <!-- col.// -->
-  <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
-        <div class="d-flex justify-content-end mb-3 mb-lg-0">
-          {% if user.id is None %}
-          <div class="widget-header">
-            <small class="title text-muted">Welcome guest!</small>
-            <div>
-              <a href="{% url 'login' %}">Sign in</a> <span class="dark-transp"> | </span>
-              <a href="{% url 'register' %}"> Register</a>
-            </div>
-          </div>
-          {% else %}
-          <div class="widget-header">
-            <small class="title text-muted">Welcome {{user.first_name}}!</small>
-            <div>
-              <a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
-              <a href="{% url 'logout' %}"> Logout</a>
-            </div>
-          </div>
-          {% endif %}
-          <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
-            <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-            <span class="badge badge-pill badge-danger notify">{{cart_count}}</span>
+
+        <!-- USER -->
+
+        {% if user.id is None %}
+
+        <div class="hidden md:flex items-center gap-3">
+          <a
+            href="{% url 'login' %}"
+            class="font-medium text-gray-700 hover:text-indigo-600 transition"
+          >
+            Login
           </a>
 
-        </div> <!-- widgets-wrap.// -->
+          <a
+            href="{% url 'register' %}"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl font-medium transition"
+          >
+            Register
+          </a>
+        </div>
 
-      </div> <!-- col.// -->
-</div> <!-- row.// -->
-  </div> <!-- container.// -->
-</section> <!-- header-main .// -->
+        {% else %}
 
+        <div class="relative group">
+          <button class="flex items-center gap-2">
+            <div
+              class="w-11 h-11 rounded-full bg-indigo-100 flex items-center justify-center"
+            >
+              <i class="fa fa-user text-indigo-600"></i>
+            </div>
 
+            <div class="hidden md:block text-left">
+              <p class="text-sm text-gray-500">Welcome</p>
 
+              <h4 class="font-semibold">{{ user.first_name }}</h4>
+            </div>
+          </button>
 
-</header> <!-- section-header.// -->
+          <!-- DROPDOWN -->
+
+          <div
+            class="absolute right-0 top-14 w-56 bg-white rounded-2xl shadow-2xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300"
+          >
+            <a
+              href="{% url 'dashboard' %}"
+              class="block px-4 py-3 rounded-xl hover:bg-gray-100 transition"
+            >
+              Dashboard
+            </a>
+
+            <a
+              href="{% url 'logout' %}"
+              class="block px-4 py-3 rounded-xl hover:bg-red-50 text-red-500 transition"
+            >
+              Logout
+            </a>
+          </div>
+        </div>
+
+        {% endif %}
+
+        <!-- CART -->
+
+        <a href="{% url 'cart' %}" class="relative">
+          <div
+            class="w-12 h-12 rounded-full bg-gray-100 hover:bg-indigo-100 flex items-center justify-center transition"
+          >
+            <i class="fa fa-shopping-cart text-xl text-gray-700"></i>
+          </div>
+
+          <span
+            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-semibold"
+          >
+            {{ cart_count }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

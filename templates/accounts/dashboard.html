@@ -1,52 +1,123 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-<section class="section-conten padding-y bg">
-  {% include 'includes/alerts.html' %}
-  <div class="container">
-    <div class="row">
+<section class="min-h-screen bg-gray-100">
+  <div class="max-w-7xl mx-auto px-4 py-8 grid lg:grid-cols-12 gap-6">
+    <!-- SIDEBAR -->
+    <aside class="lg:col-span-3">
       {% include 'includes/dashboard_sidebar.html' %}
-      <main class="col-md-9">
-        <article class="card">
-          <header class="card-header">
-            <strong class="d-inline-block mr-3">Logged in as:</strong>
-            <span>{{user.full_name}}</span>
-          </header>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="card" style="text-align: center">
-                  <div class="card-body">
-                    <h5 class="card-title">Total Orders</h5>
-                    <h4>{{orders_count}}</h4>
-                    <a href="{% url 'my_orders' %}">View Orders</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card" style="text-align: center">
-                  <div class="card-body">
-                    <img
-                      src="{{userprofile.profile_picture.url}}"
-                      alt="User Profile Picture"
-                      width="50"
-                      height="50"
-                      style="border-radius: 50%"
-                    />
-                    <p class="mb-0">{{user.email}}</p>
-                    <p>{{user.phone_number}}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- row.// -->
+    </aside>
+
+    <!-- MAIN -->
+    <main class="lg:col-span-9 space-y-6">
+      <!-- AMAZON STYLE HEADER -->
+      <div
+        class="bg-white rounded-2xl border p-6 flex flex-col md:flex-row items-center justify-between gap-6"
+      >
+        <div>
+          <h1 class="text-2xl md:text-3xl font-semibold text-gray-900">
+            Hello, {{ user.first_name }}
+          </h1>
+
+          <p class="text-gray-500 mt-1 text-sm">
+            Manage your account, orders and preferences
+          </p>
+
+          <div class="mt-4 flex gap-3 flex-wrap">
+            <a
+              href="{% url 'store' %}"
+              class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-semibold"
+            >
+              Continue Shopping
+            </a>
+
+            <a
+              href="{% url 'my_orders' %}"
+              class="border px-5 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100"
+            >
+              Your Orders
+            </a>
           </div>
-          <!-- card-body .// -->
-        </article>
-        <!-- order-group.// -->
-      </main>
-    </div>
-    <!-- row.// -->
+        </div>
+
+        <!-- PROFILE -->
+        <div class="w-20 h-20 rounded-full overflow-hidden border">
+          <img
+            src="{{ userprofile.profile_picture.url }}"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <!-- STATS (AMAZON STYLE CARDS) -->
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-white border rounded-xl p-5">
+          <p class="text-gray-500 text-sm">Total Orders</p>
+          <h2 class="text-sm text-gray-900 mt-1">{{ orders_count }}</h2>
+        </div>
+
+        <div class="bg-white border rounded-xl p-5">
+          <p class="text-gray-500 text-sm">Email</p>
+          <h2 class="text-sm text-gray-900 break-all mt-1">{{ user.email }}</h2>
+        </div>
+
+        <div class="bg-white border rounded-xl p-5">
+          <p class="text-gray-500 text-sm">Phone</p>
+          <h2 class="text-sm text-gray-900 mt-1">{{ user.phone_number }}</h2>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS (AMAZON STYLE GRID) -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Your Account</h2>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <a
+            href="{% url 'edit_profile' %}"
+            class="bg-white border rounded-xl p-5 hover:shadow-sm transition"
+          >
+            <h3 class="font-semibold">Login & Security</h3>
+            <p class="text-sm text-gray-500 mt-1">Edit profile details</p>
+          </a>
+
+          <a
+            href="{% url 'my_orders' %}"
+            class="bg-white border rounded-xl p-5 hover:shadow-sm transition"
+          >
+            <h3 class="font-semibold">Your Orders</h3>
+            <p class="text-sm text-gray-500 mt-1">Track & manage orders</p>
+          </a>
+
+          <a
+            href="{% url 'change_password' %}"
+            class="bg-white border rounded-xl p-5 hover:shadow-sm transition"
+          >
+            <h3 class="font-semibold">Password & Security</h3>
+            <p class="text-sm text-gray-500 mt-1">Update password</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- BOTTOM CTA -->
+      <div
+        class="bg-white border rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4"
+      >
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">
+            Keep shopping with us
+          </h3>
+          <p class="text-sm text-gray-500">
+            Discover deals and new arrivals every day
+          </p>
+        </div>
+
+        <a
+          href="{% url 'store' %}"
+          class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold"
+        >
+          Explore Store
+        </a>
+      </div>
+    </main>
   </div>
 </section>
-
 {% endblock %}

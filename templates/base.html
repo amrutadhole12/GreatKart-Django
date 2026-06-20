@@ -1,93 +1,474 @@
 {% load static %}
 <!doctype html>
+
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="cache-control" content="max-age=604800" />
+    <!-- META -->
+
+    <meta charset="UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name="description"
+      content="GreatKart - Premium Modern Ecommerce Platform"
     />
 
-    <title>GreatKart | One of the Biggest Online Shopping Platform</title>
+    <meta
+      name="keywords"
+      content="ecommerce, fashion, electronics, shopping, django ecommerce"
+    />
+
+    <meta name="author" content="GreatKart" />
+
+    <title>
+      {% block title %} GreatKart | Modern Ecommerce Platform {% endblock %}
+    </title>
+
+    <!-- FAVICON -->
 
     <link
-      href="{% static 'images/favicon.ico' %}"
       rel="shortcut icon"
+      href="{% static 'images/favicon.ico' %}"
       type="image/x-icon"
     />
 
-    <!-- jQuery -->
-    <script
-      src="{% static 'js/jquery-2.0.0.min.js' %}"
-      type="text/javascript"
-    ></script>
+    <!-- GOOGLE FONT -->
 
-    <!-- Bootstrap4 files-->
-    <script
-      src="{% static 'js/bootstrap.bundle.min.js' %}"
-      type="text/javascript"
-    ></script>
     <link
-      href="{% static 'css/bootstrap.css' %}"
-      rel="stylesheet"
-      type="text/css"
-    />
-
-    <!-- Font awesome 5 -->
-    <link
-      href="{% static 'fonts/fontawesome/css/all.min.css' %}"
-      type="text/css"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <!-- custom style -->
-    <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css" />
-    <link
-      href="{% static 'css/responsive.css' %}"
-      rel="stylesheet"
-      media="only screen and (max-width: 1200px)"
-    />
+    <!-- TAILWIND -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FONT AWESOME -->
 
     <link
-      href="{% static 'css/custom.css' %}"
       rel="stylesheet"
-      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+
+    <!-- SWIPER -->
+
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
 
-    <!-- custom javascript -->
-    <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="{% static 'js/jquery-3.3.1.min.js' %}"
-      type="text/javascript"
-    ></script>
+    <!-- AOS -->
 
-    <!-- PayPal Script -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+    <!-- CUSTOM CSS -->
+
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+
+    <!-- TOASTIFY -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+
+    <!-- STYLES -->
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f7fb;
+        overflow-x: hidden;
+      }
+
+      /* SCROLLBAR */
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+        border-radius: 20px;
+      }
+
+      /* LOADER */
+
+      #preloader {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .loader {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 6px solid #e5e7eb;
+        border-top: 6px solid #6366f1;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* BUTTONS */
+
+      .primary-btn {
+        background: linear-gradient(to right, #6366f1, #8b5cf6);
+        color: white;
+        padding: 14px 30px;
+        border-radius: 14px;
+        font-weight: 600;
+        transition: 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .primary-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(99, 102, 241, 0.35);
+        color: white;
+      }
+
+      .secondary-btn {
+        border: 1px solid #d1d5db;
+        background: white;
+        padding: 14px 30px;
+        border-radius: 14px;
+        font-weight: 600;
+        transition: 0.3s ease;
+      }
+
+      .secondary-btn:hover {
+        border-color: #6366f1;
+        color: #6366f1;
+      }
+
+      /* CARD */
+
+      .modern-card {
+        background: white;
+        border-radius: 28px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        transition: 0.4s ease;
+      }
+
+      .modern-card:hover {
+        transform: translateY(-8px);
+      }
+
+      /* GLASS */
+
+      .glass {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* TEXT */
+
+      .gradient-text {
+        background: linear-gradient(to right, #6366f1, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* INPUT */
+
+      .modern-input {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 18px;
+        padding: 16px 18px;
+        outline: none;
+        transition: 0.3s ease;
+        background: white;
+      }
+
+      .modern-input:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+      }
+
+      /* ANIMATION */
+
+      .hover-lift {
+        transition: 0.4s ease;
+      }
+
+      .hover-lift:hover {
+        transform: translateY(-6px);
+      }
+
+      /* BADGE */
+
+      .modern-badge {
+        background: #eef2ff;
+        color: #4f46e5;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      /* IMAGE HOVER */
+
+      .zoom-img {
+        overflow: hidden;
+        border-radius: 20px;
+      }
+
+      .zoom-img img {
+        transition: 0.5s ease;
+      }
+
+      .zoom-img:hover img {
+        transform: scale(1.08);
+      }
+
+      /* ALERT */
+
+      .custom-alert {
+        border-radius: 18px;
+        padding: 18px;
+        font-weight: 500;
+      }
+
+      /* FLOATING BUTTON */
+
+      .scroll-top {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 55px;
+        height: 55px;
+        background: #6366f1;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+        z-index: 999;
+        cursor: pointer;
+        transition: 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .scroll-top.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem !important;
+        }
+
+        h2 {
+          font-size: 1.6rem !important;
+        }
+
+        .modern-card {
+          border-radius: 22px;
+        }
+      }
+    </style>
+
+    {% block extra_css %} {% endblock %}
+  </head>
+
+  <body class="bg-gray-100 text-gray-800">
+    <!-- ==================== PRELOADER ==================== -->
+
+    <div id="preloader">
+      <div class="loader"></div>
+    </div>
+
+    <!-- ==================== NAVBAR ==================== -->
+
+    {% include 'includes/navbar.html' %}
+
+    <!-- ==================== ALERTS ==================== -->
+
+    {% if messages %}
+
+    <div class="fixed top-24 right-5 z-[9999] space-y-4">
+      {% for message in messages %}
+
+      <div
+        class="custom-alert shadow-lg px-6 py-4 text-white {% if message.tags == 'success' %} bg-green-500 {% elif message.tags == 'error' %} bg-red-500 {% elif message.tags == 'warning' %} bg-yellow-500 {% else %} bg-blue-500 {% endif %}"
+      >
+        {{ message }}
+      </div>
+
+      {% endfor %}
+    </div>
+
+    {% endif %}
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+
+    <main class="min-h-screen">{% block content %} {% endblock %}</main>
+
+    <!-- ==================== FOOTER ==================== -->
+
+    {% include 'includes/footer.html' %}
+
+    <!-- ==================== SCROLL TOP ==================== -->
+
+    <div class="scroll-top" id="scrollTop">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+
+    <!-- JQUERY -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- SWIPER -->
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- AOS -->
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- TOASTIFY -->
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- PAYPAL -->
+
     <script src="https://www.paypal.com/sdk/js?client-id=AVBSMqNtoZ1IUO6lrSe6-vm9AIV1ZKN8CgXu_nINRs80xELRs650mh3yR62groIUg-GCe59Od_EFOG6O&currency=USD"></script>
 
-    <script type="text/javascript">
-      /// some script
+    <!-- AOS INIT -->
 
-      // jquery ready start
-      $(document).ready(function () {
-        // jQuery code
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
       });
-      // jquery end
     </script>
-  </head>
-  <body>
-    <!-- navbar -->
-    {% include 'includes/navbar.html' %} {% block content %}
-    <!-- content -->
-    {% endblock %}
 
-    <!-- footer -->
-    {% include 'includes/footer.html' %}
+    <!-- PRELOADER -->
+
+    <script>
+      window.addEventListener("load", function () {
+        document.getElementById("preloader").style.display = "none";
+      });
+    </script>
+
+    <!-- SCROLL TOP -->
+
+    <script>
+      const scrollTop = document.getElementById("scrollTop");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          scrollTop.classList.add("active");
+        } else {
+          scrollTop.classList.remove("active");
+        }
+      });
+
+      scrollTop.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
+
+    <!-- AUTO HIDE ALERT -->
+
+    <script>
+      setTimeout(() => {
+        const alerts = document.querySelectorAll(".custom-alert");
+
+        alerts.forEach((alert) => {
+          alert.style.transition = ".5s";
+
+          alert.style.opacity = "0";
+
+          setTimeout(() => {
+            alert.remove();
+          }, 500);
+        });
+      }, 4000);
+    </script>
+
+    <!-- TOOLTIP -->
+
+    <script>
+      const tooltips = document.querySelectorAll("[data-tooltip]");
+
+      tooltips.forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          const tooltip = document.createElement("div");
+
+          tooltip.className =
+            "fixed bg-black text-white text-xs px-3 py-2 rounded-lg z-50";
+
+          tooltip.innerText = item.dataset.tooltip;
+
+          tooltip.id = "tooltip";
+
+          document.body.appendChild(tooltip);
+
+          const rect = item.getBoundingClientRect();
+
+          tooltip.style.top = rect.top - 40 + "px";
+
+          tooltip.style.left = rect.left + "px";
+        });
+
+        item.addEventListener("mouseleave", () => {
+          const tooltip = document.getElementById("tooltip");
+
+          if (tooltip) {
+            tooltip.remove();
+          }
+        });
+      });
+    </script>
+
+    {% block extra_js %} {% endblock %}
   </body>
 </html>
