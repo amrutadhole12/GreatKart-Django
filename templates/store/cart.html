@@ -1,176 +1,242 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
 
-<section class="bg-gray-50 min-h-screen py-10">
+{% block content %}
+
+<section class="bg-[#EAEDED] min-h-screen py-8">
   <div class="max-w-7xl mx-auto px-4">
-    <!-- TITLE -->
-    <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
 
-    {% if not cart_items %}
+{% if not cart_items %}
 
-    <div class="bg-white p-10 rounded-2xl text-center shadow">
-      <h2 class="text-2xl font-semibold">Your cart is empty</h2>
-      <a
-        href="{% url 'store' %}"
-        class="mt-6 inline-block bg-black text-white px-6 py-3 rounded-lg"
-      >
-        Continue Shopping
-      </a>
+<div class="bg-white rounded-lg shadow-sm p-10 text-center">
+  <h2 class="text-3xl font-semibold mb-4">
+    Your Cart is Empty
+  </h2>
+
+  <a
+    href="{% url 'store' %}"
+    class="inline-block bg-yellow-400 hover:bg-yellow-500 px-6 py-3 rounded-full font-medium"
+  >
+    Continue Shopping
+  </a>
+</div>
+
+{% else %}
+
+<div class="grid lg:grid-cols-3 gap-6">
+
+  <!-- LEFT SIDE -->
+  <div class="lg:col-span-2">
+
+    <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">
+        Shopping Cart
+      </h1>
+      <p class="text-sm text-gray-500 mt-1">
+        Review your selected items before checkout
+      </p>
     </div>
 
-    {% else %}
+    <div class="text-right">
+      <p class="text-sm text-gray-500">
+        Items
+      </p>
+      <p class="text-2xl font-bold text-indigo-600">
+        {{ cart_items|length }}
+      </p>
+    </div>
+  </div>
+</div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- LEFT CART ITEMS -->
-      <div class="lg:col-span-2 bg-white rounded-xl shadow-sm">
-        <!-- HEADER -->
-        <div
-          class="hidden md:grid grid-cols-12 text-sm font-semibold text-gray-500 border-b p-4"
-        >
-          <div class="col-span-6">Product</div>
-          <div class="col-span-2 text-center">Quantity</div>
-          <div class="col-span-2 text-center">Price</div>
-          <div class="col-span-2 text-center">Action</div>
-        </div>
+    <!-- PRODUCTS -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
 
-        <!-- ITEMS -->
-        {% for cart_item in cart_items %}
+      {% for cart_item in cart_items %}
 
-        <div
-          class="grid grid-cols-1 md:grid-cols-12 items-center gap-4 p-5 border-b"
-        >
-          <!-- PRODUCT -->
-          <div class="col-span-6 flex gap-4 items-center">
-            <div class="w-20 h-20 rounded-lg overflow-hidden border">
+      <div class="border-b p-6">
+
+        <div class="flex flex-col md:flex-row gap-6">
+
+          <!-- IMAGE -->
+          <div class="w-32 h-32 flex-shrink-0 mx-auto md:mx-0">
+            <a href="{{ cart_item.product.get_url }}">
               <img
                 src="{{ cart_item.product.images.url }}"
-                class="w-full h-full object-cover"
+                alt="{{ cart_item.product.product_name }}"
+                class="w-full h-full object-contain"
               />
-            </div>
-
-            <div>
-              <a
-                href="{{ cart_item.product.get_url }}"
-                class="font-semibold hover:text-indigo-600"
-              >
-                {{ cart_item.product.product_name }}
-              </a>
-
-              <div class="text-xs text-gray-500 mt-1">
-    {% for item in cart_item.variations.all %}
-        <span>
-            {{ item.variation_category|capfirst }}:
-            {{ item.variation_value|capfirst }}
-        </span>
-        {% if not forloop.last %}
-            <span class="mx-1">|</span>
-        {% endif %}
-    {% endfor %}
-</div>
-            </div>
+            </a>
           </div>
 
-          <!-- QUANTITY -->
-          <div class="col-span-2 flex justify-center items-center">
-            <div class="flex items-center border rounded-lg overflow-hidden">
+          <!-- INFO -->
+          <div class="flex-1">
+
+            <a
+              href="{{ cart_item.product.get_url }}"
+              class="text-lg text-blue-700 hover:text-orange-500"
+            >
+              {{ cart_item.product.product_name }}
+            </a>
+
+            <p class="text-green-700 text-sm mt-1">
+              In Stock
+            </p>
+
+            <p class="text-xs text-gray-500 mt-1">
+              Eligible for FREE Delivery
+            </p>
+
+            <!-- Variations -->
+            <div class="text-sm text-gray-600 mt-2">
+              {% for item in cart_item.variations.all %}
+              <span>
+                {{ item.variation_category|capfirst }}:
+                <strong>{{ item.variation_value|capfirst }}</strong>
+              </span>
+
+              {% if not forloop.last %}
+              <span class="mx-1">|</span>
+              {% endif %}
+
+              {% endfor %}
+            </div>
+
+            <!-- Quantity -->
+            <div class="flex flex-wrap items-center gap-4 mt-4">
+
+              <div class="flex border rounded-lg overflow-hidden">
+
+                <a
+                  href="{% url 'remove_cart' cart_item.product.id cart_item.id %}"
+                  class="px-3 py-2 bg-gray-100 hover:bg-gray-200"
+                >
+                  -
+                </a>
+
+                <span class="px-4 py-2 font-medium">
+                  {{ cart_item.quantity }}
+                </span>
+
+                <form
+                  action="{% url 'add_cart' cart_item.product.id %}"
+                  method="POST"
+                >
+                  {% csrf_token %}
+
+                  {% for item in cart_item.variations.all %}
+                  <input
+                    type="hidden"
+                    name="{{ item.variation_category|lower }}"
+                    value="{{ item.variation_value }}"
+                  />
+                  {% endfor %}
+
+                  <button
+                    type="submit"
+                    class="px-3 py-2 bg-gray-100 hover:bg-gray-200"
+                  >
+                    +
+                  </button>
+                </form>
+
+              </div>
+
               <a
-                href="{% url 'remove_cart' cart_item.product.id cart_item.id %}"
-                class="px-3 py-2 bg-gray-100 hover:bg-black hover:text-white"
+                href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}"
+                onclick="return confirm('Are you sure you want to remove this item?');"
+                class="text-blue-600 hover:text-orange-500 text-sm"
               >
-                -
+                Delete
               </a>
 
-              <span class="px-4 font-semibold"> {{ cart_item.quantity }} </span>
-
-              <form
-                action="{% url 'add_cart' cart_item.product.id %}"
-                method="POST"
-              >
-                {% csrf_token %} {% for item in cart_item.variations.all %}
-                <input
-                  type="hidden"
-                  name="{{ item.variation_category|lower }}"
-                  value="{{ item.variation_value }}"
-                />
-                {% endfor %}
-
-                <button
-                  type="submit"
-                  class="px-3 py-2 bg-gray-100 hover:bg-indigo-600 hover:text-white"
-                >
-                  +
-                </button>
-              </form>
             </div>
+
           </div>
 
           <!-- PRICE -->
-          <div class="col-span-2 text-center font-bold text-gray-700">
-            ₹{{ cart_item.sub_total }}
+          <div class="text-right">
+            <span class="font-bold text-xl">
+              ₹{{ cart_item.sub_total }}
+            </span>
           </div>
 
-          <!-- REMOVE -->
-          <div class="col-span-2 text-center">
-            <a
-              href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}"
-              onclick="
-                return confirm(
-                  'Are you sure that you want to delete this item?',
-                );
-              "
-              class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
-            >
-              Remove
-            </a>
-          </div>
         </div>
 
-        {% endfor %}
       </div>
 
-      <!-- RIGHT SUMMARY -->
-      <div class="bg-white rounded-xl shadow-sm p-6 h-fit sticky top-20">
-        <h2 class="text-xl font-bold mb-5">Order Summary</h2>
+      {% endfor %}
 
-        <div class="space-y-3 text-gray-600">
-          <div class="flex justify-between">
-            <span>Total price:</span>
-            <span class="font-semibold">₹{{ total }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span>Tax:</span>
-            <span class="font-semibold">₹{{ tax }}</span>
-          </div>
-
-          <div class="border-t pt-3 flex justify-between text-lg font-bold">
-            <span>Total:</span>
-            <span class="text-black">₹{{ grand_total }}</span>
-          </div>
-        </div>
-
-        <!-- PAYMENT ICONS -->
-        <div class="flex gap-2 mt-5">
-          <img src="{% static 'images/misc/payments.png' %}" class="h-6" />
-        </div>
-
-        <!-- CHECKOUT -->
-        <a
-          href="{% url 'checkout' %}"
-          class="block mt-6 bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg font-semibold"
-        >
-          Checkout
-        </a>
-
-        <a
-          href="{% url 'store' %}"
-          class="block mt-3 border text-center py-3 rounded-lg hover:bg-gray-100"
-        >
-          Continue Shopping
-        </a>
-      </div>
     </div>
 
-    {% endif %}
+  </div>
+
+  <!-- RIGHT SIDE SUMMARY -->
+  <div>
+
+    <div class="bg-white rounded-lg shadow-sm p-6 sticky top-20">
+
+      <p class="text-green-700 text-sm">
+        Your order is eligible for FREE Delivery.
+      </p>
+
+      <div class="mt-4">
+        <h2 class="text-xl">
+          Subtotal:
+          <span class="font-bold">
+            ₹{{ grand_total }}
+          </span>
+        </h2>
+      </div>
+
+      <div class="border-t mt-6 pt-4 space-y-3">
+
+        <div class="flex justify-between">
+          <span>Items Total</span>
+          <span>₹{{ total }}</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span>Tax</span>
+          <span>₹{{ tax }}</span>
+        </div>
+
+        <div class="flex justify-between text-lg font-bold">
+          <span>Order Total</span>
+          <span>₹{{ grand_total }}</span>
+        </div>
+
+      </div>
+
+      <img
+        src="{% static 'images/misc/payments.png' %}"
+        class="h-8 mt-5 mx-auto"
+      />
+
+      <a
+        href="{% url 'checkout' %}"
+        class="block mt-5 bg-yellow-400 hover:bg-yellow-500 text-center py-3 rounded-full font-medium"
+      >
+        Proceed to Buy
+      </a>
+
+      <a
+  href="{% url 'store' %}"
+  class="block mt-4 text-center py-3 rounded-xl font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
+>
+  ← Continue Shopping
+</a>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endif %}
+
+
   </div>
 </section>
 

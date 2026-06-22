@@ -1,455 +1,623 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-
-<section class="bg-gray-50 min-h-screen py-16">
-  <div class="max-w-7xl mx-auto px-6">
-    <!-- PAGE HEADER -->
-
-    <div class="text-center mb-14">
-      <div
-        class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-indigo-100 mb-6"
-      >
-        <i class="fa fa-lock text-4xl text-indigo-600"></i>
-      </div>
-
-      <h1 class="text-5xl font-bold mb-4">Secure Payment</h1>
-
-      <p class="text-gray-500 text-lg max-w-2xl mx-auto">
-        Review your order details and complete your payment securely using
-        PayPal.
-      </p>
-    </div>
-
-    <div class="grid lg:grid-cols-3 gap-10">
-      <!-- LEFT SECTION -->
-
-      <div class="lg:col-span-2 space-y-8">
-        <!-- BILLING ADDRESS -->
-
-        <div class="bg-white rounded-[35px] shadow-xl overflow-hidden">
-          <div class="p-8 border-b">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="text-3xl font-bold">Billing Address</h2>
-
-                <p class="text-gray-500 mt-2">Shipping and billing details.</p>
-              </div>
-
-              <div
-                class="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center"
-              >
-                <i class="fa fa-map-marker text-2xl text-indigo-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-8">
-            <div class="grid md:grid-cols-2 gap-8">
-              <div>
-                <label class="text-gray-500 text-sm"> Full Name </label>
-
-                <p class="font-semibold text-lg mt-1">{{order.full_name}}</p>
-              </div>
-
-              <div>
-                <label class="text-gray-500 text-sm"> Email Address </label>
-
-                <p class="font-semibold text-lg mt-1">{{order.email}}</p>
-              </div>
-
-              <div>
-                <label class="text-gray-500 text-sm"> Phone Number </label>
-
-                <p class="font-semibold text-lg mt-1">{{order.phone}}</p>
-              </div>
-
-              <div>
-                <label class="text-gray-500 text-sm"> Country </label>
-
-                <p class="font-semibold text-lg mt-1">{{order.country}}</p>
-              </div>
-            </div>
-
-            <div class="mt-8">
-              <label class="text-gray-500 text-sm"> Full Address </label>
-
-              <p class="font-semibold text-lg mt-1">
-                {{order.full_address}}, {{order.city}}, {{order.state}}
-              </p>
-            </div>
-
-            {% if order.order_note %}
-
-            <div
-              class="mt-8 bg-yellow-50 border border-yellow-200 rounded-2xl p-5"
-            >
-              <div class="flex items-start gap-4">
-                <div
-                  class="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center"
-                >
-                  <i class="fa fa-sticky-note text-yellow-600"></i>
-                </div>
-
-                <div>
-                  <h4 class="font-semibold mb-2">Order Note</h4>
-
-                  <p class="text-gray-600">{{order.order_note}}</p>
-                </div>
-              </div>
-            </div>
-
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- PAYMENT METHOD -->
-
-        <div class="bg-white rounded-[35px] shadow-xl overflow-hidden">
-          <div class="p-8 border-b">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="text-3xl font-bold">Payment Method</h2>
-
-                <p class="text-gray-500 mt-2">
-                  Safe and encrypted payment gateway.
-                </p>
-              </div>
-
-              <div
-                class="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center"
-              >
-                <i class="fab fa-paypal text-3xl text-blue-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-8">
-            <div
-              class="border-2 border-indigo-500 rounded-3xl p-6 flex items-center justify-between"
-            >
-              <div class="flex items-center gap-5">
-                <div
-                  class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center"
-                >
-                  <i class="fab fa-paypal text-4xl text-blue-600"></i>
-                </div>
-
-                <div>
-                  <h4 class="text-xl font-bold">PayPal</h4>
-
-                  <p class="text-gray-500 mt-1">
-                    Pay securely using your PayPal account.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <span
-                  class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold"
-                >
-                  Active
-                </span>
-              </div>
-            </div>
-
-            <!-- TRUST BADGES -->
-
-            <div class="grid md:grid-cols-3 gap-5 mt-8">
-              <div class="bg-gray-50 rounded-2xl p-5 text-center">
-                <i class="fa fa-lock text-3xl text-green-600 mb-4"></i>
-
-                <h4 class="font-semibold">SSL Secure</h4>
-
-                <p class="text-sm text-gray-500 mt-2">
-                  End-to-end encrypted payments.
-                </p>
-              </div>
-
-              <div class="bg-gray-50 rounded-2xl p-5 text-center">
-                <i class="fa fa-shield text-3xl text-indigo-600 mb-4"></i>
-
-                <h4 class="font-semibold">Buyer Protection</h4>
-
-                <p class="text-sm text-gray-500 mt-2">
-                  Protected transactions guaranteed.
-                </p>
-              </div>
-
-              <div class="bg-gray-50 rounded-2xl p-5 text-center">
-                <i class="fa fa-refresh text-3xl text-orange-500 mb-4"></i>
-
-                <h4 class="font-semibold">Easy Refunds</h4>
-
-                <p class="text-sm text-gray-500 mt-2">
-                  Fast and secure refund support.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- PRODUCTS -->
-
-        <div class="bg-white rounded-[35px] shadow-xl overflow-hidden">
-          <div class="p-8 border-b">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="text-3xl font-bold">Review Products</h2>
-
-                <p class="text-gray-500 mt-2">
-                  Verify your products before payment.
-                </p>
-              </div>
-
-              <div
-                class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center"
-              >
-                <i class="fa fa-shopping-bag text-2xl text-green-600"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-8">
-            <div class="space-y-6">
-              {% for cart_item in cart_items %}
-
-              <div class="flex gap-5 border-b pb-6">
-                <!-- IMAGE -->
-
-                <div
-                  class="w-24 h-24 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0"
-                >
-                  <img
-                    src="{{ cart_item.product.images.url }}"
-                    class="w-full h-full object-cover"
-                  />
-                </div>
-
-                <!-- INFO -->
-
-                <div class="flex-1">
-                  <a
-                    href="{{ cart_item.product.get_url }}"
-                    class="text-xl font-semibold hover:text-indigo-600 transition"
-                  >
-                    {{ cart_item.product.product_name }}
-                  </a>
-
-                  <div class="text-gray-500 mt-3">
-                    {% for item in cart_item.variations.all %} {% empty %}
-                    <!-- No variations -->
-                    {% endfor %}
-                  </div>
-
-                  <div class="mt-3 flex items-center gap-8">
-                    <span class="text-gray-500">
-                      Quantity :
-                      <span class="font-semibold text-black">
-                        {{cart_item.quantity}}
-                      </span>
-                    </span>
-
-                    <span class="text-gray-500">
-                      Unit Price :
-                      <span class="font-semibold text-black">
-                        ₹{{ cart_item.product.price }}
-                      </span>
-                    </span>
-                  </div>
-                </div>
-
-                <!-- TOTAL -->
-
-                <div
-                  class="text-2xl font-bold text-indigo-600 whitespace-nowrap"
-                >
-                  ₹{{ cart_item.sub_total }}
-                </div>
-              </div>
-
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT SECTION -->
-
-      <div>
-        <div class="bg-white rounded-[35px] shadow-xl p-8 sticky top-28">
-          <!-- SUMMARY -->
-
-          <div class="flex items-center justify-between mb-8">
-            <div>
-              <h2 class="text-3xl font-bold">Order Summary</h2>
-
-              <p class="text-gray-500 mt-2">Final payment overview.</p>
-            </div>
-
-            <div
-              class="w-14 h-14 rounded-2xl bg-indigo-100 flex items-center justify-center"
-            >
-              <i class="fa fa-receipt text-indigo-600 text-xl"></i>
-            </div>
-          </div>
-
-          <!-- TOTALS -->
-
-          <div class="space-y-6">
-            <div class="flex items-center justify-between">
-              <span class="text-gray-500 text-lg"> Subtotal </span>
-
-              <span class="font-semibold text-lg"> ₹{{total}} </span>
-            </div>
-
-            <div class="flex items-center justify-between">
-              <span class="text-gray-500 text-lg"> Tax </span>
-
-              <span class="font-semibold text-lg"> ₹{{tax}} </span>
-            </div>
-
-            <div class="border-t pt-6 flex items-center justify-between">
-              <span class="text-2xl font-bold"> Grand Total </span>
-
-              <span class="text-4xl font-bold text-indigo-600">
-                ₹{{grand_total}}
-              </span>
-            </div>
-          </div>
-
-          <!-- PAYMENT ICONS -->
-
-          <div class="flex items-center gap-4 flex-wrap mt-8">
-            <div class="bg-gray-100 rounded-xl px-4 py-3">
-              <i class="fab fa-cc-visa text-3xl"></i>
-            </div>
-
-            <div class="bg-gray-100 rounded-xl px-4 py-3">
-              <i class="fab fa-cc-mastercard text-3xl"></i>
-            </div>
-
-            <div class="bg-gray-100 rounded-xl px-4 py-3">
-              <i class="fab fa-paypal text-3xl"></i>
-            </div>
-          </div>
-
-          <!-- PAYPAL BUTTON -->
-
-          <div class="mt-10">
-            <div id="paypal-button-container">
-              <!-- PAYPAL BUTTON -->
-            </div>
-          </div>
-
-          <!-- DEMO ALERT -->
-
-          <div class="mt-8 bg-red-50 border border-red-200 rounded-2xl p-5">
-            <div class="flex items-start gap-4">
-              <div
-                class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center"
-              >
-                <i class="fa fa-exclamation-circle text-red-600"></i>
-              </div>
-
-              <div>
-                <h4 class="font-semibold text-red-700">Demo Website</h4>
-
-                <p class="text-sm text-red-500 mt-2">
-                  Please do not make real payments on this demo platform.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="bg-gray-100 min-h-screen py-8">
+
+<div class="max-w-7xl mx-auto px-4">
+
+<!-- PAGE TITLE -->
+<div class="mb-6">
+    <h1 class="text-2xl font-semibold text-gray-900">
+        Checkout
+    </h1>
+
+    <p class="text-sm text-gray-600 mt-1">
+        Review your order and complete payment
+    </p>
+</div>
+
+
+<div class="grid lg:grid-cols-3 gap-6">
+
+
+<!-- ================= LEFT SIDE ================= -->
+
+<div class="lg:col-span-2 space-y-5">
+
+
+<!-- BILLING ADDRESS -->
+
+<div class="bg-white border rounded-lg">
+
+<div class="px-5 py-4 border-b">
+<h2 class="text-lg font-semibold">
+    Billing Address
+</h2>
+</div>
+
+
+<div class="p-5">
+
+<div class="grid md:grid-cols-2 gap-5">
+
+
+<div>
+<p class="text-xs text-gray-500">
+Name
+</p>
+
+<p class="font-medium mt-1">
+{{order.full_name}}
+</p>
+</div>
+
+
+
+<div>
+<p class="text-xs text-gray-500">
+Email
+</p>
+
+<p class="font-medium mt-1">
+{{order.email}}
+</p>
+</div>
+
+
+
+<div>
+<p class="text-xs text-gray-500">
+Phone
+</p>
+
+<p class="font-medium mt-1">
+{{order.phone}}
+</p>
+</div>
+
+
+
+<div>
+<p class="text-xs text-gray-500">
+Country
+</p>
+
+<p class="font-medium mt-1">
+{{order.country}}
+</p>
+</div>
+
+
+</div>
+
+
+<div class="mt-5">
+
+<p class="text-xs text-gray-500">
+Address
+</p>
+
+
+<p class="font-medium mt-1">
+{{order.full_address}},
+{{order.city}},
+{{order.state}}
+</p>
+
+</div>
+
+
+
+{% if order.order_note %}
+
+<div class="mt-5 bg-yellow-50 border border-yellow-200 p-4 rounded">
+
+<p class="font-semibold text-sm">
+Order Note
+</p>
+
+<p class="text-sm text-gray-600 mt-1">
+{{order.order_note}}
+</p>
+
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- PAYMENT METHOD -->
+
+<div class="bg-white border rounded-lg">
+
+<div class="px-5 py-4 border-b">
+<h2 class="text-lg font-semibold">
+Payment Method
+</h2>
+</div>
+
+
+<div class="p-5 space-y-4">
+
+
+<!-- PAYPAL -->
+
+<label class="flex items-center gap-4 border rounded-lg p-4 cursor-pointer hover:border-orange-400">
+
+<input 
+type="radio" 
+name="payment_method"
+value="PayPal"
+checked
+class="w-4 h-4"
+/>
+
+
+<div>
+
+<h3 class="font-semibold">
+PayPal
+</h3>
+
+<p class="text-sm text-gray-500">
+Pay securely online
+</p>
+
+</div>
+
+
+</label>
+
+
+
+
+
+<!-- COD -->
+
+<label class="flex items-center gap-4 border rounded-lg p-4 cursor-pointer hover:border-orange-400">
+
+
+<input 
+type="radio" 
+name="payment_method"
+value="COD"
+class="w-4 h-4"
+/>
+
+
+<div>
+
+<h3 class="font-semibold">
+Cash on Delivery
+</h3>
+
+
+<p class="text-sm text-gray-500">
+Pay when your order arrives
+</p>
+
+
+</div>
+
+
+</label>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- PRODUCTS -->
+
+
+<div class="bg-white border rounded-lg">
+
+
+<div class="px-5 py-4 border-b">
+
+<h2 class="text-lg font-semibold">
+Your Items
+</h2>
+
+</div>
+
+
+
+<div class="p-5">
+
+
+{% for cart_item in cart_items %}
+
+
+<div class="flex gap-4 py-4 border-b">
+
+
+<img
+src="{{cart_item.product.images.url}}"
+class="w-20 h-20 object-cover rounded border"
+/>
+
+
+
+<div class="flex-1">
+
+
+<a href="{{cart_item.product.get_url}}"
+class="font-medium hover:text-orange-500">
+
+{{cart_item.product.product_name}}
+
+</a>
+
+
+
+<p class="text-sm text-gray-500 mt-2">
+
+Quantity:
+{{cart_item.quantity}}
+
+</p>
+
+
+</div>
+
+
+
+<div class="font-semibold">
+
+₹{{cart_item.sub_total}}
+
+</div>
+
+
+</div>
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- ================= RIGHT SUMMARY ================= -->
+
+
+<div>
+
+
+<div class="bg-white border rounded-lg p-5 sticky top-5">
+
+
+<h2 class="text-xl font-semibold mb-5">
+Order Summary
+</h2>
+
+
+
+<div class="space-y-4 text-sm">
+
+
+<div class="flex justify-between">
+
+<span>
+Subtotal
+</span>
+
+<span>
+₹{{total}}
+</span>
+
+</div>
+
+
+
+<div class="flex justify-between">
+
+<span>
+Tax
+</span>
+
+<span>
+₹{{tax}}
+</span>
+
+</div>
+
+
+
+<div class="border-t pt-4 flex justify-between">
+
+<span class="font-bold text-lg">
+Total Amount
+</span>
+
+
+<span class="font-bold text-xl text-orange-600">
+₹{{grand_total}}
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="mt-6">
+
+
+<div class="mt-6">
+
+
+<!-- PAYPAL BUTTON -->
+
+
+
+<div id="paypal-button-container">
+    <p class="text-center mb-3">
+    <img src="{% static './images/misc/payments.png' %}" 
+         class="img-fluid mx-auto d-block" 
+         style="width: 150px; height: auto;">
+</p>
+</div>
+
+
+
+<!-- COD BUTTON -->
+
+<form action="{% url 'cod_payment' %}" method="POST" id="cod-form">
+
+    {% csrf_token %}
+
+    <input
+        type="hidden"
+        name="order_number"
+        value="{{ order.order_number }}"
+    >
+
+    <input
+        type="hidden"
+        name="payment_method"
+        value="COD"
+    >
+
+    <button
+        type="submit"
+        id="cod-button"
+        class="hidden w-full bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-lg font-semibold"
+    >
+        Place Order
+    </button>
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="mt-5 bg-green-50 border border-green-200 rounded p-4">
+
+
+<p class="font-semibold text-sm text-green-700">
+Secure Payment
+</p>
+
+
+<p class="text-xs text-gray-600 mt-1">
+Your payment information is protected.
+</p>
+
+
+</div>
+
+
+
+<a
+href="{% url 'store' %}"
+class="block text-center mt-5 border rounded py-3 text-sm hover:bg-gray-50">
+
+Continue Shopping
+
+</a>
+
+
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
 </section>
 
 <script>
-  function getCookie(name) {
-    let cookieValue = null;
 
-    if (document.cookie && document.cookie !== "") {
-      const cookies = document.cookie.split(";");
+const paymentOptions = document.querySelectorAll(
+'input[name="payment_method"]'
+);
 
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
+const paypalBox = document.getElementById(
+"paypal-button-container"
+);
 
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+const codButton = document.getElementById(
+"cod-button"
+);
 
-          break;
+paymentOptions.forEach(option => {
+
+    option.addEventListener("change", function() {
+
+        if (this.value === "COD") {
+
+            paypalBox.classList.add("hidden");
+            codButton.classList.remove("hidden");
+
+        } else {
+
+            paypalBox.classList.remove("hidden");
+            codButton.classList.add("hidden");
+
         }
-      }
+
+    });
+
+});
+
+</script>
+
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&intent=capture"></script>
+
+<script>
+
+	function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+	var amount = "{{ grand_total }}"
+	var url = "{% url 'payments' %}"
+	var csrftoken = getCookie('csrftoken');
+	var orderID = "{{order.order_number}}"
+	var payment_method = 'PayPal'
+	var redirect_url = "{% url 'order_complete' %}"
+	// Render the PayPal button into #paypal-button-container
+	paypal.Buttons({
+
+		style:{
+        layout:"vertical",
+        color:"gold",
+        shape:"rect",
+        label:"paypal",
+        height:45
+    },
+
+		// Set up the transaction
+		createOrder: function(data, actions) {
+			return actions.order.create({
+				purchase_units: [{
+					amount: {
+						value: amount,
+					}
+				}]
+			});
+		},
+
+		// Finalize the transaction
+		onApprove: function(data, actions) {
+			return actions.order.capture().then(function(details) {
+				// Show a success message to the buyer
+				console.log(details);
+				sendData();
+				function sendData(){
+					fetch(url, {
+						method : "POST",
+						headers: {
+							"Content-type": "application/json",
+							"X-CSRFToken": csrftoken,
+						},
+						body: JSON.stringify({
+							orderID: orderID,
+							transID: details.id,
+							payment_method: payment_method,
+							status: details.status,
+						}),
+					})
+				  .then((response) => response.json())
+				  .then((data) => {
+						window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+					});
+				}
+			});
+		}
+
+
+	}).render('#paypal-button-container');
+</script>
+
+
+<!-- <script>
+
+paypal.Buttons({
+
+    style:{
+        layout:"vertical",
+        color:"gold",
+        shape:"rect",
+        label:"paypal",
+        height:45
+    },
+
+    createOrder:function(data,actions){
+
+        return actions.order.create({
+
+            purchase_units:[{
+
+                amount:{
+                    value:"10.00"
+                }
+
+            }]
+
+        });
+
     }
 
-    return cookieValue;
-  }
+}).render("#paypal-button-container");
 
-  var amount = "{{ grand_total }}";
-  var url = "{% url 'payments' %}";
-  var csrftoken = getCookie("csrftoken");
-  var orderID = "{{order.order_number}}";
-  var payment_method = "PayPal";
-  var redirect_url = "{% url 'order_complete' %}";
-
-  paypal
-    .Buttons({
-      style: {
-        color: "blue",
-        shape: "pill",
-        label: "pay",
-        height: 50,
-      },
-
-      createOrder: function (data, actions) {
-        return actions.order.create({
-          purchase_units: [
-            {
-              amount: {
-                value: amount,
-              },
-            },
-          ],
-        });
-      },
-
-      onApprove: function (data, actions) {
-        return actions.order.capture().then(function (details) {
-          sendData();
-
-          function sendData() {
-            fetch(url, {
-              method: "POST",
-
-              headers: {
-                "Content-type": "application/json",
-                "X-CSRFToken": csrftoken,
-              },
-
-              body: JSON.stringify({
-                orderID: orderID,
-                transID: details.id,
-                payment_method: payment_method,
-                status: details.status,
-              }),
-            })
-              .then((response) => response.json())
-
-              .then((data) => {
-                window.location.href =
-                  redirect_url +
-                  "?order_number=" +
-                  data.order_number +
-                  "&payment_id=" +
-                  data.transID;
-              });
-          }
-        });
-      },
-    })
-
-    .render("#paypal-button-container");
-</script>
+</script> -->
 
 {% endblock %}

@@ -12,7 +12,7 @@ from django.http import HttpResponse, JsonResponse
 
 def payments(request):
     body= json.loads(request.body)
-    order= Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderedID'])
+    order= Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
 
     #store transaction details inside payment model
     payment= Payment(
@@ -177,3 +177,60 @@ def order_complete(request):
         return render(request, 'orders/order_complete.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):
         return redirect('home')
+    
+def cod_payment(request):
+    if request.method == "POST":
+
+        order_number = request.POST.get('order_number')
+
+        print("POST DATA:", request.POST)
+        print("ORDER NUMBER:", order_number)
+
+        order = Order.objects.get(
+            user=request.user,
+            order_number=order_number,
+            is_ordered=False
+        )
+
+        # Create payment record
+        payment = Payment.objects.create(
+            user=request.user,
+            payment_id=f"COD-{order.order_number}",
+            payment_method="COD",
+            amount_paid=order.order_total,
+            status="Pending"
+        )
+
+        # Update order
+        order.payment = payment
+        order.is_ordered = True
+        order.save()
+
+        # Move cart items to OrderProduct
+        cart_items = CartItem.objects.filter(user=request.user)
+
+        for item in cart_items:
+
+            orderproduct = OrderProduct.objects.create(
+                order=order,
+                payment=payment,
+                user=request.user,
+                product=item.product,
+                quantity=item.quantity,
+                product_price=item.product.price,
+                ordered=True
+            )
+
+            orderproduct.variations.set(item.variations.all())
+
+            # reduce stock
+            product = item.product
+            product.stock -= item.quantity
+            product.save()
+
+        # clear cart
+        cart_items.delete()
+
+        return redirect(
+            f"/orders/order_complete/?order_number={order.order_number}&payment_id={payment.payment_id}"
+        )
