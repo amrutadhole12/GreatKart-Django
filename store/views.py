@@ -77,7 +77,10 @@ def product_detail(request, category_slug, product_slug):
     else:
         orderproduct = None
 
-    reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
+    reviews = ReviewRating.objects.filter(
+    product=single_product,
+    status=True
+).order_by('-created_at')
     product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
 
     context = {

@@ -51,19 +51,6 @@
           {{ single_product.product_name }}
         </h1>
 
-        <!-- RATINGS (UNCHANGED DISPLAY) -->
-        <div class="flex items-center gap-2 mt-3 text-yellow-400">
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star"></i>
-          <i class="fa fa-star-half-o"></i>
-
-          <span class="text-gray-500 text-sm ml-2">
-            {{ single_product.countReview }} Reviews
-          </span>
-        </div>
-
         <!-- PRICE -->
         <div class="mt-5">
           <p class="text-3xl font-bold text-indigo-600">
@@ -166,6 +153,8 @@
     <div class="grid lg:grid-cols-3 gap-10 mt-10">
       <!-- FORM -->
       <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+
         <h2 class="text-xl font-bold mb-5">Write Review</h2>
 
         <form
@@ -173,6 +162,24 @@
           method="POST"
         >
           {% csrf_token %}
+
+          <label>How do you rate this product?</label>
+						<br>
+            
+						<div class="rate">
+							<input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
+							<input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
+							<input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
+							<input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
+							<input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
+							<input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
+							<input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2"></label>
+							<input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
+							<input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
+							<input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
+						</div>
+<div id="selected-rating" class="selected-rating"></div>
+            
 
           <input
             type="text"
@@ -208,6 +215,7 @@
         <div class="border-b pb-5 mb-5">
           <h4 class="font-semibold">{{ review.user.full_name }}</h4>
           <p class="text-gray-500 text-sm">{{ review.updated_at }}</p>
+          <p class="mt-2 text-gray-600">{{ review.subject }}</p>
           <p class="mt-2 text-gray-600">{{ review.review }}</p>
         </div>
         {% empty %}
@@ -217,5 +225,14 @@
     </div>
   </div>
 </section>
+
+<script>
+document.querySelectorAll('input[name="rating"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        document.getElementById('selected-rating').textContent = this.value;
+    });
+});
+</script>
+
 
 {% endblock %}
